@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AuthentecationVerifyView: View {
     @StateObject private var vm = AuthentecationVerifyViewModel()
-    @State var status = UserDefaults.standard.value(forKey: "status") as? Bool ?? false
     @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack{
@@ -65,7 +64,7 @@ struct AuthentecationVerifyView: View {
                     
                 }
                 .sheet(isPresented: $vm.showCreateAccount, content: {
-                    CreateAccountView().presentationDetents([ .large , .fraction(0.8)]).cornerRadius(10, corners: [.topLeft ,.topRight])
+                    CreateAccountView().presentationDetents([ .large , .fraction(0.8)]).cornerRadius(15, corners: [.topLeft ,.topRight])
                 })
                 .padding()
                 .navigationBarBackButtonHidden()
@@ -76,6 +75,6 @@ struct AuthentecationVerifyView: View {
     }
 }
 
-#Preview {
-    AuthentecationVerifyView()
-}
+//#Preview {
+//    AuthentecationVerifyView()
+//}

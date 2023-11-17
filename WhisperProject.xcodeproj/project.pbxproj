@@ -10,8 +10,10 @@
 		894F9AFD2B073C760075E708 /* AuthentecationVerifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894F9AFC2B073C760075E708 /* AuthentecationVerifyViewModel.swift */; };
 		894F9AFF2B073CFB0075E708 /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894F9AFE2B073CFB0075E708 /* CreateAccountView.swift */; };
 		894F9B012B073D420075E708 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894F9B002B073D420075E708 /* HomeView.swift */; };
+		894F9B032B07614B0075E708 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894F9B022B07614B0075E708 /* StorageManager.swift */; };
+		898189A22B07B19400368979 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898189A12B07B19400368979 /* CreateAccountViewModel.swift */; };
 		898C5EE02B06020A0006C892 /* WhisperProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898C5EDF2B06020A0006C892 /* WhisperProjectApp.swift */; };
-		898C5EE22B06020A0006C892 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898C5EE12B06020A0006C892 /* ContentView.swift */; };
+		898C5EE22B06020A0006C892 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898C5EE12B06020A0006C892 /* RootView.swift */; };
 		898C5EE42B0602100006C892 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 898C5EE32B0602100006C892 /* Assets.xcassets */; };
 		898C5EE72B0602100006C892 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 898C5EE62B0602100006C892 /* Preview Assets.xcassets */; };
 		898C5EF12B0618010006C892 /* OnBoardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898C5EF02B0618010006C892 /* OnBoardingFlow.swift */; };
@@ -37,9 +39,11 @@
 		894F9AFC2B073C760075E708 /* AuthentecationVerifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentecationVerifyViewModel.swift; sourceTree = "<group>"; };
 		894F9AFE2B073CFB0075E708 /* CreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
 		894F9B002B073D420075E708 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		894F9B022B07614B0075E708 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		898189A12B07B19400368979 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
 		898C5EDC2B06020A0006C892 /* WhisperProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhisperProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		898C5EDF2B06020A0006C892 /* WhisperProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperProjectApp.swift; sourceTree = "<group>"; };
-		898C5EE12B06020A0006C892 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		898C5EE12B06020A0006C892 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		898C5EE32B0602100006C892 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		898C5EE62B0602100006C892 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		898C5EF02B0618010006C892 /* OnBoardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingFlow.swift; sourceTree = "<group>"; };
@@ -84,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				894F9AFE2B073CFB0075E708 /* CreateAccountView.swift */,
+				898189A12B07B19400368979 /* CreateAccountViewModel.swift */,
 			);
 			path = CreateAccount;
 			sourceTree = "<group>";
@@ -91,8 +96,8 @@
 		894F9AFA2B073C300075E708 /* Authentecation */ = {
 			isa = PBXGroup;
 			children = (
-				898C5EFF2B0638040006C892 /* AuthentecationViewModel.swift */,
 				898C5EFB2B0637E30006C892 /* AuthentecationView.swift */,
+				898C5EFF2B0638040006C892 /* AuthentecationViewModel.swift */,
 			);
 			path = Authentecation;
 			sourceTree = "<group>";
@@ -129,7 +134,7 @@
 				898C5F382B0640C40006C892 /* GoogleService-Info.plist */,
 				898C5F442B0660B10006C892 /* Extensions.swift */,
 				898C5EDF2B06020A0006C892 /* WhisperProjectApp.swift */,
-				898C5EE12B06020A0006C892 /* ContentView.swift */,
+				898C5EE12B06020A0006C892 /* RootView.swift */,
 				898C5EEE2B06024D0006C892 /* Models */,
 				898C5EED2B0602440006C892 /* Core */,
 				898C5EE32B0602100006C892 /* Assets.xcassets */,
@@ -149,6 +154,7 @@
 		898C5EED2B0602440006C892 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				894F9B022B07614B0075E708 /* StorageManager.swift */,
 				898C5F3C2B064B530006C892 /* FirestoreManager.swift */,
 				898C5F3A2B0643750006C892 /* AuthentecationManager.swift */,
 				894F9AF92B073BE40075E708 /* CreateAccount */,
@@ -283,14 +289,16 @@
 				894F9B012B073D420075E708 /* HomeView.swift in Sources */,
 				898C5F3D2B064B530006C892 /* FirestoreManager.swift in Sources */,
 				898C5EF52B06200A0006C892 /* OnboardingBaseView.swift in Sources */,
+				898189A22B07B19400368979 /* CreateAccountViewModel.swift in Sources */,
 				894F9AFD2B073C760075E708 /* AuthentecationVerifyViewModel.swift in Sources */,
 				898C5F3B2B0643750006C892 /* AuthentecationManager.swift in Sources */,
 				898C5EF32B061C900006C892 /* OnboardingModel.swift in Sources */,
 				894F9AFF2B073CFB0075E708 /* CreateAccountView.swift in Sources */,
 				898C5EFE2B0637F60006C892 /* AuthentecationVerifyView.swift in Sources */,
 				898C5EF12B0618010006C892 /* OnBoardingFlow.swift in Sources */,
-				898C5EE22B06020A0006C892 /* ContentView.swift in Sources */,
+				898C5EE22B06020A0006C892 /* RootView.swift in Sources */,
 				898C5EFC2B0637E30006C892 /* AuthentecationView.swift in Sources */,
+				894F9B032B07614B0075E708 /* StorageManager.swift in Sources */,
 				898C5F452B0660B10006C892 /* Extensions.swift in Sources */,
 				898C5EE02B06020A0006C892 /* WhisperProjectApp.swift in Sources */,
 			);

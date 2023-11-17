@@ -13,7 +13,7 @@ struct WhisperProjectApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
-            ContentView().preferredColorScheme(.light)
+            RootView().preferredColorScheme(.light)
         }
     }
     
