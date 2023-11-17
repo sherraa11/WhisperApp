@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("on_boarding") var onBoarding : Bool = false
     var body: some View {
-       OnBoardingFlow()
+        if !onBoarding{
+            OnBoardingFlow()
+        }else{
+            AuthentecationView()
+        }
     }
 }
 
