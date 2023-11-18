@@ -13,16 +13,27 @@ struct RowView: View {
     var body: some View {
         HStack(spacing: 20) {
             
-            AsyncImage(url: imageURL) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 50, height: 50)
-                    .clipShape(Circle())
-            } placeholder: {
-                ProgressView()
+            
+            CacheAsyncImage(url: imageURL) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 50, height: 50)
+                        .clipShape(Circle())
+                case .failure(_):
+                    Image(systemName: "person")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 50, height: 50)
+                        .clipShape(Circle())
+                @unknown default:
+                    fatalError()
+                }
             }
-            .frame(width: 44, height: 44)
             
             VStack(alignment: .leading) {
                 Text(name)
