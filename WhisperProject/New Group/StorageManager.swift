@@ -17,7 +17,7 @@ class StorageManager {
     
     func uploadPhoto (selectedImage : UIImage){
         let storage = Storage.storage().reference()
-        let imageData = selectedImage.jpegData(compressionQuality: 1)
+        let imageData = selectedImage.jpegData(compressionQuality: 0.5)
         let path = FirestoreManager.shared.currentUser()
         let file = storage.child(path)
         let metaData = StorageMetadata()
