@@ -11,14 +11,33 @@ class AuthentecationViewModel : ObservableObject {
     @Published var phoneNumber = ""
     @Published var cityCode = ""
     @Published var showVerify : Bool = false
+    @Published var isLoading : Bool = false
+    @Published var cityCodeError : Bool = false
+    @Published var phoneNumberError : Bool = false
     
     
     func Singup() {
-        guard !cityCode.isEmpty , !phoneNumber.isEmpty else {
-            print("enter a phoneNumber")
-            return
+        cityCodeError = cityCode.isEmpty
+        phoneNumberError = true
+        if cityCode != "" && (phoneNumber.count == 11 || phoneNumber.count == 10){
+            cityCodeError = false
+            phoneNumberError = false
+            isLoading.toggle()
+            
+            let truePhoneNumber = {
+                if self.phoneNumber.count == 11 {
+                    return String(self.phoneNumber.dropFirst())
+                }
+                return self.phoneNumber
+            }
+            AuthentecationManager.shared.SignUp(phoneNumber: truePhoneNumber() , cityCode: cityCode ) { error in
+                if let error {
+                    print(error)
+                }else {
+                    self.showVerify.toggle()
+                }
+                self.isLoading.toggle()
+            }
         }
-        AuthentecationManager.shared.SignUp(phoneNumber: phoneNumber, cityCode: cityCode)
-            showVerify.toggle()
     }
 }

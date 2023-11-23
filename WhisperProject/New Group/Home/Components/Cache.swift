@@ -29,10 +29,8 @@ struct CacheAsyncImage<Content>: View where Content: View {
     var body: some View {
 
         if let cached = ImageCache[url] {
-            let _ = print("cached \(url.absoluteString)")
             content(.success(cached))
         } else {
-            let _ = print("request \(url.absoluteString)")
             AsyncImage(
                 url: url,
                 scale: scale,
@@ -51,26 +49,6 @@ struct CacheAsyncImage<Content>: View where Content: View {
         return content(phase)
     }
 }
-
-struct CacheAsyncImage_Previews: PreviewProvider {
-    static var previews: some View {
-        CacheAsyncImage(
-            url: URL(string: "https://firebasestorage.googleapis.com/v0/b/chatapp-9879e.appspot.com/o/ie2WBFTrAgUzPMsTw0MjWyOdJnA2?alt=media&token=b4466f6a-b8c7-474f-86d8-167088086d9c")!
-        ) { phase in
-            switch phase {
-            case .empty:
-                ProgressView()
-            case .success(let image):
-                image
-            case .failure(let error):
-                Text("\(error.localizedDescription)")
-            @unknown default:
-                fatalError()
-            }
-        }
-    }
-}
-
 
 fileprivate class ImageCache {
     static private var cache: [URL: Image] = [:]

@@ -10,6 +10,8 @@ import SwiftUI
 
 struct AuthentecationView: View {
     @StateObject private var vm = AuthentecationViewModel()
+    @FocusState private var isTextFieldFoucsed : Bool
+    
     
     
     var body: some View {
@@ -33,46 +35,57 @@ struct AuthentecationView: View {
                         .font(.body)
                         .foregroundColor(.gray)
                     
-                    
                     HStack{
-                        
                         TextField("20", text: $vm.cityCode)
                             .keyboardType(.numberPad)
                             .frame(width: 45)
                             .padding()
                             .background(Color("bcolor"))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
-                        
-                        
+                            .focused($isTextFieldFoucsed)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(vm.cityCodeError ? Color.red : Color.clear , lineWidth : 1.5)
+                            }
                         TextField("Number", text: $vm.phoneNumber)
                             .keyboardType(.numberPad)
                             .padding()
                             .background(Color("bcolor"))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
-                        
+                            .focused($isTextFieldFoucsed)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(vm.phoneNumberError ? Color.red : Color.clear , lineWidth : 1.5)
+                            }
                     }
-                    
-                    Button(action: {
-                        vm.Singup()
-                    }, label: {
-                        Text("Send")
-                            .frame(width: UIScreen.main.bounds.width - 30,height: 50)
+                    if vm.isLoading {
+                        ProgressView()
+                            .tint(Color.white)
+                            .frame(width: UIScreen.main.bounds.width - 30, height: 50)
                             .background(Color("middleColor"))
-                            .foregroundStyle(Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
-                    })
-                    
+                            .disabled(true)
+                    } else {
+                        Button(action: {
+                            vm.Singup()
+                            isTextFieldFoucsed = false
+                        }, label: {
+                            Text("Send")
+                                .frame(width: UIScreen.main.bounds.width - 30,height: 50)
+                                .background(Color("middleColor"))
+                                .foregroundStyle(Color.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        })
+                    }
                 }
                 .padding()
                 .navigationDestination(isPresented: $vm.showVerify) {
                     AuthentecationVerifyView()
                 }
             }
-        }.toolbar(.hidden)
-        
+        }
+        .toolbar(.hidden)
     }
-    
-    
 }
 
 #Preview {

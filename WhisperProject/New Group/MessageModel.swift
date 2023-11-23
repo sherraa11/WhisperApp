@@ -6,9 +6,15 @@
 //
 
 import Foundation
-struct MessageModel: Identifiable, Codable {
-    var id: String
-    var text: String
-    var received: Bool
+struct MessageModel: Identifiable, Hashable, Decodable {
+    var id : String
+    var message: String
+    var senderId: String
     var timestamp: Date
 }
+
+/*
+ message
+ senderID
+ timestamp
+ */

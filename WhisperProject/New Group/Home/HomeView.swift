@@ -9,43 +9,31 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var vm = HomeViewModel()
-    
-    
     var body: some View {
         NavigationStack{
-            
             VStack {
                 if vm.isSearching() {
-                    
                     List(vm.filteredFriends) { friend in
-                        NavigationLink(value: friend) {
+                        NavigationLink(destination: ChatView(imageUrl: URL(string: friend.profilePhoto)!, name: friend.name, friendUserID: friend.id )) {
                             RowView(imageURL: URL(string: friend.profilePhoto)!, name: friend.name)
                         }
-                    }.listStyle(.plain)
-                        .navigationTitle("Chats")
-                    
+                    }
+                    .listStyle(.plain)
+                    .navigationTitle("Chats")
                 }else{
-                    List(){
-                        ForEach(1..<10) { user in
-                            
-                            NavigationLink(value: user) {
-                                RowView(imageURL: URL(string: "https://firebasestorage.googleapis.com/v0/b/chatapp-9879e.appspot.com/o/ie2WBFTrAgUzPMsTw0MjWyOdJnA2?alt=media&token=b4466f6a-b8c7-474f-86d8-167088086d9c")!,
-                                        name: "عشري")
-                            }
+                    List(vm.friendList){ friend in
+                        NavigationLink(destination: ChatView(imageUrl: URL(string: friend.profilePhoto)!, name: friend.name, friendUserID: friend.id )) {
+                            RowView(imageURL: URL(string: friend.profilePhoto)!, name: friend.name)
                         }
-                    }.listStyle(.plain)
+                    }
+                    .navigationDestination(for: UserModel.self, destination: { friend in
+                        ChatView(imageUrl: URL(string: friend.profilePhoto)!, name: friend.name , friendUserID: friend.id)})
+                    .listStyle(.plain)
                         .navigationTitle("Chats")
                 }
-            }.navigationDestination(for: FriendsModel.self, destination: { friend in
-                Text(friend.name)
-                Text(friend.status)
-            })
-            .navigationDestination(for: Int.self) { user in
-                Text("\(user)")
             }
-        
-        }
-        .searchable(text: $vm.searchText , placement: .navigationBarDrawer(displayMode: .always))
+        }.onAppear{UserDefaults.standard.set( true, forKey: "showHome")}
+        .searchable(text: $vm.searchText , placement: .navigationBarDrawer(displayMode: .automatic))
     }
 }
 

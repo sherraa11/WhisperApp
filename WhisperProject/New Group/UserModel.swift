@@ -6,12 +6,10 @@
 //
 
 import Foundation
-struct FriendsModel : Identifiable , Hashable {
+struct UserModel : Identifiable , Hashable {
     let id : String
     let name : String
     let phone : String
     let profilePhoto : String
     let status : String
-   
-    
 }

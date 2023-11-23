@@ -13,7 +13,6 @@ import PhotosUI
 struct CreateAccountView: View {
     @ObservedObject var vm = CreateAccountViewModel()
 
-    
     var body: some View {
         NavigationStack{
             VStack(alignment: .leading , spacing: 15){
@@ -33,7 +32,8 @@ struct CreateAccountView: View {
                             Image(systemName: "person.crop.circle.badge.plus")
                                 .resizable()
                                 .frame(width: 100 , height: 80)
-                                .foregroundStyle(Color("middleColor"))
+                                .foregroundStyle(vm.showImageError ? Color.red.opacity(0.8) : Color("middleColor"))
+                
                         }else {
                             Image(uiImage: vm.selectedImage!)
                                 .resizable()
@@ -56,6 +56,10 @@ struct CreateAccountView: View {
                     .padding()
                     .background(Color("bcolor"))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(vm.showNameError ? Color.red : Color.clear , lineWidth : 1.5)
+                    }
                 
                 Text("About you .. ")
                     .font(.body)
@@ -66,11 +70,15 @@ struct CreateAccountView: View {
                 TextField("status", text:$vm.status)
                     .padding()
                     .background(Color("bcolor"))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))  
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(vm.showStatusError ? Color.red : Color.clear , lineWidth : 1.5)
+                    }
                 
                 
                 Button(action: {
-                    vm.CreataAndUpload()
+                    vm.CreateUser()
                 }, label: {
                     Text("Create")
                         .font(.custom("Proxima Nova", size: 18))

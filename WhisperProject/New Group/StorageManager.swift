@@ -15,10 +15,15 @@ class StorageManager {
     static let shared = StorageManager()
     private init(){ }
     
+    /*
+     this function it upload an image from the liberary to firebase Storage
+     and make a downloadd url to its userdata as string 
+     */
+    
     func uploadPhoto (selectedImage : UIImage){
         let storage = Storage.storage().reference()
         let imageData = selectedImage.jpegData(compressionQuality: 0.5)
-        let path = FirestoreManager.shared.currentUser()
+        let path = FirestoreManager.shared.getCurrentUserID()
         let file = storage.child(path)
         let metaData = StorageMetadata()
         metaData.contentType = "image/jpeg"

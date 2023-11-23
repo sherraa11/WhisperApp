@@ -12,7 +12,10 @@ import PhotosUI
 class CreateAccountViewModel : ObservableObject {
     @Published var name : String = ""
     @Published var status : String = ""
-    @Published var showHome : Bool = UserDefaults.standard.value(forKey: "showHome") as? Bool ?? false
+    @Published var showNameError : Bool = false
+    @Published var showStatusError : Bool = false
+    @Published var showImageError : Bool = false
+    @Published var showHome : Bool = false
     @Published private(set) var selectedImage : UIImage? = nil
     @Published var imageSelection : PhotosPickerItem? = nil {
         didSet {
@@ -33,32 +36,30 @@ class CreateAccountViewModel : ObservableObject {
             }
         }
     }
-    
-    func uploadImage() -> Bool{
-        guard let selectedImage else {
-            print("select an image")
-            return false
+
+    func CreateUser() {
+        if selectedImage == nil {
+            showImageError = true
+        } else {
+            showImageError = false
         }
-        StorageManager.shared.uploadPhoto(selectedImage: selectedImage)
-        return true
-    }
-    
-    func createUser() -> Bool{
-        print(name)
-        print(status)
-        if name != "" &&  status != "" {
+        if name.isEmpty {
+            showNameError = true
+        } else {
+            showNameError = false
+        }
+        if status.isEmpty {
+            showStatusError = true
+        } else {
+            showStatusError = false
+        }
+        if !showImageError && !showNameError && !showStatusError {
+            
             FirestoreManager.shared.createUser(name: name, status: status)
-            return true
-        }
-        return false
-    }
-    
-    func CreataAndUpload() {
-        if createUser() && uploadImage() {
+            StorageManager.shared.uploadPhoto(selectedImage: selectedImage!)
             showHome.toggle()
-            UserDefaults.standard.set( true, forKey: "showHome")
-            print(showHome)
         }
     }
-    
 }
+
+

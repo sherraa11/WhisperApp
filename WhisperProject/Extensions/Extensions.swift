@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import UIKit
 
 // Extension for adding rounded corners to specific corners
 extension View {

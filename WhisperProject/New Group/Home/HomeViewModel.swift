@@ -9,82 +9,54 @@ import Foundation
 import Firebase
 
 class HomeViewModel : ObservableObject {
-    @Published var FriendsList = [FriendsModel]()
-//    @Published var FilteredList = [FriendsModel]()
+    @Published var allUserList = [UserModel]()
+    @Published var friendList = [UserModel]()
     @Published var searchText : String = ""
-   
+
     init(){
-        getData()
+        getAllUsers()
+        getFriendsList()
     }
+//    check if user searching
     func isSearching()  -> Bool {
         if searchText.isEmpty {
             return false
         }else {
-//            fileted(searchText: searchText)
             return true
         }
     }
-    
-    var filteredFriends: [FriendsModel] {
-        guard !searchText.isEmpty else { return FriendsList }
-        
-        return FriendsList.filter { friend in
+//    filter data based on user search (phone , name)
+    var filteredFriends: [UserModel] {
+        guard !searchText.isEmpty else { return allUserList }
+        return allUserList.filter { friend in
             return friend.phone.localizedCaseInsensitiveContains(searchText) ||
                    friend.name.localizedCaseInsensitiveContains(searchText)
         }
     }
-
-    
-//    func fileted(searchText: String){
-//        guard !searchText.isEmpty else {
-//            FilteredList = []
-//            return
-//        }
-//        let search = searchText.lowercased()
-//        FilteredList = FriendsList.filter({ friends in
-//            let nameSearch = friends.name.lowercased().contains(search)
-//            let numberSearch = friends.phone.lowercased().contains(search)
-//            return nameSearch || numberSearch
-//        })
-//        
-//        
-//    }
-    
-    
-    func getData() {
-        let db = Firestore.firestore()
-        db.collection("friends").getDocuments { [weak self] snapshot, error in
-            guard let self = self else { return }
-
-            if let error = error {
-                print("Error fetching documents: \(error.localizedDescription)")
+//    get all users with chat to view at home
+    func getFriendsList(){
+        let chatroomsCollectionRef = Firestore.firestore().collection("chatrooms")
+        // Add a snapshot listener to the chatrooms collection
+        chatroomsCollectionRef.addSnapshotListener { querySnapshot, error in
+            guard let snapshot = querySnapshot else {
+                print("Error fetching chatrooms: \(error?.localizedDescription ?? "Unknown error")")
                 return
             }
-
-            guard let snapshot = snapshot else {
-                print("Snapshot is nil.")
-                return
-            }
-
-            var friendsList = [FriendsModel]()
-
-            for document in snapshot.documents {
-                let id = document.documentID
-                let name = document["name"] as? String ?? "name"
-                let phone = document["phone"] as? String ?? "phone"
-                let profilePhoto = document["profilePhoto"] as? String ?? "profilePhoto"
-                let status = document["status"] as? String ?? "status"
-
-                if id == FirestoreManager.shared.currentUser() {
-                
-                } else {
-                    let friend = FriendsModel(id: id, name: name, phone: phone, profilePhoto: profilePhoto, status: status)
-                    friendsList.append(friend)
+            if !snapshot.documentChanges.isEmpty {
+                FirestoreManager.shared.getUserFriendsList { returnedFriendList in
+                    self.friendList = returnedFriendList
                 }
             }
-
-            DispatchQueue.main.async {
-                self.FriendsList = friendsList
+        }
+    }
+  
+// i wanted to perform a better search expersdience but it should make the search from firebase
+    func getAllUsers() {
+        FirestoreManager.shared.getData { Allusers in
+            if Allusers != nil {
+                DispatchQueue.main.async {
+                    self.allUserList = Allusers!
+                }
             }
         }
     }

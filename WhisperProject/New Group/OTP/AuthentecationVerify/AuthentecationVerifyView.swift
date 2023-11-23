@@ -10,6 +10,8 @@ import SwiftUI
 struct AuthentecationVerifyView: View {
     @StateObject private var vm = AuthentecationVerifyViewModel()
     @Environment(\.dismiss) var dismiss
+    @FocusState private var isTextFieldFoucsed : Bool
+    
     var body: some View {
         NavigationStack{
             ZStack {
@@ -48,10 +50,22 @@ struct AuthentecationVerifyView: View {
                             .padding()
                             .background(Color("bcolor"))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
-                        
+                            .focused($isTextFieldFoucsed)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(vm.verificationCodeError ? Color.red : Color.clear , lineWidth : 1.5)
+                            }
                     }
-                    Button(action: {
-                        vm.Verfiy()
+                    if vm.isLoading {
+                        ProgressView()
+                            .tint(Color.white)
+                            .frame(width: UIScreen.main.bounds.width - 30, height: 50)
+                            .background(Color("middleColor"))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .disabled(true)
+                    }else { Button(action: {
+                        vm.VerfiyOTP()
+                        isTextFieldFoucsed = false
                     }, label: {
                         Text("Verify")
                             .frame(width: UIScreen.main.bounds.width - 30,height: 50)
@@ -59,12 +73,10 @@ struct AuthentecationVerifyView: View {
                             .foregroundStyle(Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     })
-                    
-                    
-                    
+                    }
                 }
                 .sheet(isPresented: $vm.showCreateAccount, content: {
-                    CreateAccountView().presentationDetents([ .large , .fraction(0.8)]).cornerRadius(15, corners: [.topLeft ,.topRight])
+                    CreateAccountView().presentationDetents([ .large , .fraction(0.8)]).cornerRadius(30, corners: [.topLeft ,.topRight])
                 })
                 .padding()
                 .navigationBarBackButtonHidden()
@@ -74,7 +86,3 @@ struct AuthentecationVerifyView: View {
         }.toolbar(.hidden)
     }
 }
-
-//#Preview {
-//    AuthentecationVerifyView()
-//}

@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 class SettinsViewModel : ObservableObject {
     
-    @Published var userList = [CurrentUserModel]()
+    @Published var userList = [UserModel]()
 
     func getUserData() {
         let db = Firestore.firestore()
@@ -26,8 +26,8 @@ class SettinsViewModel : ObservableObject {
                 return
             }
 
-            var friendsList = [FriendsModel]()
-            var currentUser: CurrentUserModel?
+            var friendsList = [UserModel]()
+            var currentUser: UserModel?
 
             for document in snapshot.documents {
                 let id = document.documentID
@@ -36,8 +36,8 @@ class SettinsViewModel : ObservableObject {
                 let profilePhoto = document["profilePhoto"] as? String ?? "profilePhoto"
                 let status = document["status"] as? String ?? "status"
 
-                if id == FirestoreManager.shared.currentUser() {
-                    currentUser = CurrentUserModel(id: id, name: name, phone: phone, profilePhoto: profilePhoto, status: status)
+                if id == FirestoreManager.shared.getCurrentUserID() {
+                    currentUser = UserModel(id: id, name: name, phone: phone, profilePhoto: profilePhoto, status: status)
                 }
             }
 
