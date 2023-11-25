@@ -43,6 +43,7 @@ struct ChatView: View {
                 MessageField(user: friendUserID, chatid: vm.createChatRoomId(secndUserId: friendUserID))
             }
             .onAppear {
+                messagesManager.lastMessageId = messagesManager.lastMessageId + "1"
                 messagesManager.lastMessageId = messagesManager.lastMessageId
                 chatid = vm.createChatRoomId(secndUserId: friendUserID)
                 guard let chatid else {return}

@@ -46,7 +46,7 @@ final class FirestoreManager {
      this function create a user in firebase collectoin as UserModel uid ,name , status , phone
      */
     func createUser(name: String , status : String){
-        db.collection("friends").document(getCurrentUserID()).setData(["name" : name , "status" : status , "phone" : getCurrentUserPhoneNumber()]) { error in
+        db.collection("friends").document(getCurrentUserID()).setData(["name" : name , "status" : status ,"id" : getCurrentUserID(), "phone" : getCurrentUserPhoneNumber()]) { error in
             if error != nil{
                 print((error?.localizedDescription)!)
                 return
