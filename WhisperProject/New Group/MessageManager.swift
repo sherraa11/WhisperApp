@@ -43,9 +43,8 @@ class MessagesManager: ObservableObject {
             }
             //save last Message details
             if let lastMessage = self.messages.last {
-                self.lastMessageDetails = LastMessageDeatils( lastMessageSenderId: lastMessage.senderId, lastMessageTimestamp: lastMessage.timestamp)
+                self.db.collection("chatrooms").document(chatId).setData(["lastMessageTimestamp" : lastMessage.timestamp , "lastMessageSenderId" : lastMessage.senderId ,"lastMessage" : lastMessage.message], merge: true)
             }
-            
         }
     }
     // Add a message in Firestore

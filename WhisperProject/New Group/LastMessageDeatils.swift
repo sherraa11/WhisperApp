@@ -6,7 +6,8 @@
 //
 
 import Foundation
-struct LastMessageDeatils  {
+struct LastMessageDeatils : Hashable, Decodable {
+    let lastMessage : String
     let lastMessageSenderId : String
     let lastMessageTimestamp : Date
 }

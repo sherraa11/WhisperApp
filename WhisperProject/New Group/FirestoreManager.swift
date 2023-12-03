@@ -81,7 +81,7 @@ final class FirestoreManager {
         let currentUser = FirestoreManager.shared.getCurrentUserID()
         let sortedUserIds = [currentUser, secondUser].sorted()
         let chatId = sortedUserIds.joined(separator: "_")
-        db.collection("chatrooms").document(chatId).setData(["chatRoomId" : chatId, "userIds" : [currentUser , secondUser]]) { error in
+        db.collection("chatrooms").document(chatId).setData(["chatRoomId" : chatId, "userIds" : [currentUser , secondUser]] , merge: true) { error in
             if let error = error {
                 print(error.localizedDescription)
                 return
