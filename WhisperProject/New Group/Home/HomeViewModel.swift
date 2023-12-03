@@ -50,7 +50,7 @@ class HomeViewModel : ObservableObject {
         }
     }
   
-// i wanted to perform a better search expersdience but it should make the search from firebase
+// i wanted to perform a better search experience but it should make the search from firebase
     func getAllUsers() {
         FirestoreManager.shared.getData { Allusers in
             if Allusers != nil {

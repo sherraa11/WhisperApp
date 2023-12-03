@@ -12,30 +12,11 @@ struct RowView: View {
     let name : String
     var body: some View {
         HStack(spacing: 20) {
-            CacheAsyncImage(url: imageURL) { phase in
-                switch phase {
-                case .empty:
-                    ProgressView()
-                case .success(let image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 50, height: 50)
-                        .clipShape(Circle())
-                case .failure(_):
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 50, height: 50)
-                        .clipShape(Circle())
-                @unknown default:
-                    fatalError()
-                }
-            }
+            KingfisherAsyncImage(url: imageURL)
             VStack(alignment: .leading) {
                 Text(name)
                     .font(.title2)
-                Text("Online")
+                Text("Last Message")
                     .font(.caption)
                     .foregroundColor(.gray)
             }

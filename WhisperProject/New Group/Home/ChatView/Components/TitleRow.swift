@@ -19,27 +19,7 @@ struct TitleRow: View {
                 .onTapGesture {
                     dismiss.callAsFunction()
                 }
-            
-            CacheAsyncImage(url: imageUrl) { phase in
-                switch phase {
-                case .empty:
-                    ProgressView()
-                case .success(let image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 50, height: 50)
-                        .clipShape(Circle())
-                case .failure(_):
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 50, height: 50)
-                        .clipShape(Circle())
-                @unknown default:
-                    fatalError()
-                }
-            }
+            KingfisherAsyncImage(url: imageUrl)
             VStack(alignment: .leading) {
                 Text(name)
                     .font(.title)
