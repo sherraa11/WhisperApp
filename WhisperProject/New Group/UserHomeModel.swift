@@ -6,8 +6,10 @@
 //
 
 import Foundation
-struct LastMessageDeatils : Hashable, Decodable {
+struct UserHomeModel : Hashable, Decodable {
+    let chatRoomId : String
     let lastMessage : String
     let lastMessageSenderId : String
     let lastMessageTimestamp : Date
+    let userIds : [String]
 }

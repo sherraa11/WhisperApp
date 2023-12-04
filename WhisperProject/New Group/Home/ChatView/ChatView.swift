@@ -11,9 +11,7 @@ struct ChatView: View {
     @ObservedObject var messagesManager = MessagesManager.shared
     @ObservedObject var vm = ChatViewModel()
     
-    @State var imageUrl: URL
-    @State var name: String
-    @State var friendUserID: String
+    @State var user: UserModel
     @State var chatid: String?
     
     @Environment(\.dismiss) var dismiss
@@ -22,35 +20,47 @@ struct ChatView: View {
         NavigationStack {
             VStack {
                 VStack {
-                    TitleRow(imageUrl: imageUrl, name: name)
+                    TitleRow(user: user)
                     
                     ScrollViewReader { proxy in
                         ScrollView {
                             ForEach(messagesManager.messages, id: \.id) { message in
                                 MessageBubble(message: message)
                             }
+                            .onChange(of: messagesManager.lastMessageId) { _ , _ in
+                                DispatchQueue.main.async {
+                                    proxy.scrollTo(messagesManager.lastMessageId ?? "", anchor: .bottom)
+                                }
+                            }
                         }
                         .padding(.top, 10)
-                        .background(.white)
+                        .background(Color.white)
                         .cornerRadius(30, corners: [.topLeft, .topRight])
-                        .onChange(of:messagesManager.lastMessageId , { old, new in
-                            withAnimation {
-                                proxy.scrollTo(new, anchor: .bottom)
+                        .onAppear {
+                            // Scroll to the last message when the view appears
+                            DispatchQueue.main.async {
+                                proxy.scrollTo(messagesManager.lastMessageId ?? "", anchor: .bottom)
                             }
-                        })
-                    }
-                }.background(Color("middleColor"))
-                MessageField(user: friendUserID, chatid: vm.createChatRoomId(secndUserId: friendUserID))
+                        }
+                    }.scrollIndicators(.hidden)
+                }
+                .background(Color("middleColor"))
+                
+                MessageField(user: user.id, chatid: vm.createChatRoomId(secndUserId: user.id))
             }
             .onAppear {
-                messagesManager.lastMessageId = messagesManager.lastMessageId + "1"
-                messagesManager.lastMessageId = messagesManager.lastMessageId
-                chatid = vm.createChatRoomId(secndUserId: friendUserID)
-                guard let chatid else {return}
+                chatid = vm.createChatRoomId(secndUserId: user.id)
+                guard let chatid = chatid else { return }
                 messagesManager.getMessages(chatId: chatid)
+                
+                // Set lastMessageId to the ID of the last message in the chat here
+                if let lastMessageId = messagesManager.messages.last?.id {
+                    messagesManager.lastMessageId = lastMessageId
+                }
             }
             .toolbar(.hidden)
-        }.gesture(DragGesture().onEnded({ gesture in
+        }
+        .gesture(DragGesture().onEnded({ gesture in
             if gesture.translation.width > 100  {
                 self.dismiss.callAsFunction()
             }

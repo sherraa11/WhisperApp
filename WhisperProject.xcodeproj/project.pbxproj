@@ -15,13 +15,16 @@
 		890CE9EA2B09318200ECF0F6 /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890CE9E92B09318200ECF0F6 /* MessageManager.swift */; };
 		892283D02B08A74D00BADB27 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892283CF2B08A74D00BADB27 /* MessageModel.swift */; };
 		892283D52B08B30F00BADB27 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892283D42B08B30F00BADB27 /* SettingView.swift */; };
-		892283D82B08DE8700BADB27 /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892283D72B08DE8600BADB27 /* RowView.swift */; };
-		8946B4C62B0BFA7E0099E4EC /* LastMessageDeatils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8946B4C52B0BFA7E0099E4EC /* LastMessageDeatils.swift */; };
+		892283D82B08DE8700BADB27 /* RowSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892283D72B08DE8600BADB27 /* RowSearchView.swift */; };
+		893324A02B1E14570068BF8C /* SwiftfulLoadingIndicators in Frameworks */ = {isa = PBXBuildFile; productRef = 8933249F2B1E14570068BF8C /* SwiftfulLoadingIndicators */; };
+		8946B4C62B0BFA7E0099E4EC /* UserHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8946B4C52B0BFA7E0099E4EC /* UserHomeModel.swift */; };
 		894F9AFD2B073C760075E708 /* AuthentecationVerifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894F9AFC2B073C760075E708 /* AuthentecationVerifyViewModel.swift */; };
 		894F9AFF2B073CFB0075E708 /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894F9AFE2B073CFB0075E708 /* CreateAccountView.swift */; };
 		894F9B012B073D420075E708 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894F9B002B073D420075E708 /* HomeView.swift */; };
 		894F9B032B07614B0075E708 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894F9B022B07614B0075E708 /* StorageManager.swift */; };
 		895681962B1C83CA002658D0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 895681952B1C83CA002658D0 /* Kingfisher */; };
+		897F65A82B1CC92600F2AAE5 /* CombinedUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897F65A72B1CC92600F2AAE5 /* CombinedUserModel.swift */; };
+		897F65AA2B1CD05400F2AAE5 /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897F65A92B1CD05400F2AAE5 /* RowView.swift */; };
 		898189A22B07B19400368979 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898189A12B07B19400368979 /* CreateAccountViewModel.swift */; };
 		898189A42B07C47400368979 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898189A32B07C47400368979 /* UserModel.swift */; };
 		898189A62B07D4D300368979 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898189A52B07D4D300368979 /* HomeViewModel.swift */; };
@@ -59,12 +62,14 @@
 		890CE9E92B09318200ECF0F6 /* MessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
 		892283CF2B08A74D00BADB27 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		892283D42B08B30F00BADB27 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		892283D72B08DE8600BADB27 /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
-		8946B4C52B0BFA7E0099E4EC /* LastMessageDeatils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMessageDeatils.swift; sourceTree = "<group>"; };
+		892283D72B08DE8600BADB27 /* RowSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowSearchView.swift; sourceTree = "<group>"; };
+		8946B4C52B0BFA7E0099E4EC /* UserHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeModel.swift; sourceTree = "<group>"; };
 		894F9AFC2B073C760075E708 /* AuthentecationVerifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentecationVerifyViewModel.swift; sourceTree = "<group>"; };
 		894F9AFE2B073CFB0075E708 /* CreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
 		894F9B002B073D420075E708 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		894F9B022B07614B0075E708 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		897F65A72B1CC92600F2AAE5 /* CombinedUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedUserModel.swift; sourceTree = "<group>"; };
+		897F65A92B1CD05400F2AAE5 /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
 		898189A12B07B19400368979 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
 		898189A32B07C47400368979 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		898189A52B07D4D300368979 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -94,6 +99,7 @@
 			files = (
 				898C5F152B063BC50006C892 /* FirebaseDatabase in Frameworks */,
 				898C5F1B2B063BC50006C892 /* FirebaseFirestore in Frameworks */,
+				893324A02B1E14570068BF8C /* SwiftfulLoadingIndicators in Frameworks */,
 				898C5F1F2B063BC50006C892 /* FirebaseFirestoreSwift in Frameworks */,
 				898C5F0F2B063BC50006C892 /* FirebaseAuth in Frameworks */,
 				895681962B1C83CA002658D0 /* Kingfisher in Frameworks */,
@@ -137,7 +143,8 @@
 		892283D62B08DE6B00BADB27 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				892283D72B08DE8600BADB27 /* RowView.swift */,
+				892283D72B08DE8600BADB27 /* RowSearchView.swift */,
+				897F65A92B1CD05400F2AAE5 /* RowView.swift */,
 				890CE9DD2B0927B800ECF0F6 /* Cache.swift */,
 			);
 			path = Components;
@@ -249,9 +256,10 @@
 		898C5EEE2B06024D0006C892 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				897F65A72B1CC92600F2AAE5 /* CombinedUserModel.swift */,
 				898189A32B07C47400368979 /* UserModel.swift */,
 				892283CF2B08A74D00BADB27 /* MessageModel.swift */,
-				8946B4C52B0BFA7E0099E4EC /* LastMessageDeatils.swift */,
+				8946B4C52B0BFA7E0099E4EC /* UserHomeModel.swift */,
 			);
 			name = Models;
 			path = "New Group";
@@ -310,6 +318,7 @@
 				898C5F342B063BC50006C892 /* FirebaseStorage */,
 				89DD50622B1C72AB003ED3F7 /* Shimmer */,
 				895681952B1C83CA002658D0 /* Kingfisher */,
+				8933249F2B1E14570068BF8C /* SwiftfulLoadingIndicators */,
 			);
 			productName = WhisperProject;
 			productReference = 898C5EDC2B06020A0006C892 /* WhisperProject.app */;
@@ -343,6 +352,7 @@
 				898C5F012B063BC50006C892 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				89DD50612B1C72AB003ED3F7 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 				895681942B1C83CA002658D0 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				8933249E2B1E14570068BF8C /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */,
 			);
 			productRefGroup = 898C5EDD2B06020A0006C892 /* Products */;
 			projectDirPath = "";
@@ -375,14 +385,16 @@
 				890CE9DE2B0927B800ECF0F6 /* Cache.swift in Sources */,
 				890CE9E42B092FC300ECF0F6 /* MessageBubble.swift in Sources */,
 				898C5F002B0638040006C892 /* AuthentecationViewModel.swift in Sources */,
+				897F65AA2B1CD05400F2AAE5 /* RowView.swift in Sources */,
 				890CE9E82B09312600ECF0F6 /* ChatView.swift in Sources */,
 				898189A62B07D4D300368979 /* HomeViewModel.swift in Sources */,
 				892283D52B08B30F00BADB27 /* SettingView.swift in Sources */,
 				894F9B012B073D420075E708 /* HomeView.swift in Sources */,
 				898C5F3D2B064B530006C892 /* FirestoreManager.swift in Sources */,
 				899456512B09F0CB00E9D5C5 /* ChatViewModel.swift in Sources */,
-				8946B4C62B0BFA7E0099E4EC /* LastMessageDeatils.swift in Sources */,
+				8946B4C62B0BFA7E0099E4EC /* UserHomeModel.swift in Sources */,
 				898C5EF52B06200A0006C892 /* OnboardingBaseView.swift in Sources */,
+				897F65A82B1CC92600F2AAE5 /* CombinedUserModel.swift in Sources */,
 				898189A22B07B19400368979 /* CreateAccountViewModel.swift in Sources */,
 				890CE9EA2B09318200ECF0F6 /* MessageManager.swift in Sources */,
 				894F9AFD2B073C760075E708 /* AuthentecationVerifyViewModel.swift in Sources */,
@@ -398,7 +410,7 @@
 				898C5EFC2B0637E30006C892 /* AuthentecationView.swift in Sources */,
 				894F9B032B07614B0075E708 /* StorageManager.swift in Sources */,
 				898189A42B07C47400368979 /* UserModel.swift in Sources */,
-				892283D82B08DE8700BADB27 /* RowView.swift in Sources */,
+				892283D82B08DE8700BADB27 /* RowSearchView.swift in Sources */,
 				898C5F452B0660B10006C892 /* Extensions.swift in Sources */,
 				898C5EE02B06020A0006C892 /* WhisperProjectApp.swift in Sources */,
 			);
@@ -614,6 +626,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8933249E2B1E14570068BF8C /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftfulThinking/SwiftfulLoadingIndicators.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.4;
+			};
+		};
 		895681942B1C83CA002658D0 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -641,6 +661,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8933249F2B1E14570068BF8C /* SwiftfulLoadingIndicators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8933249E2B1E14570068BF8C /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */;
+			productName = SwiftfulLoadingIndicators;
+		};
 		895681952B1C83CA002658D0 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 895681942B1C83CA002658D0 /* XCRemoteSwiftPackageReference "Kingfisher" */;

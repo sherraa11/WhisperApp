@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct TitleRow: View {
-    var imageUrl : URL
-    var name : String
+    @State var user : UserModel
     @Environment(\.dismiss) var dismiss
     var body: some View {
         HStack(spacing: 20) {
@@ -19,13 +18,13 @@ struct TitleRow: View {
                 .onTapGesture {
                     dismiss.callAsFunction()
                 }
-            KingfisherAsyncImage(url: imageUrl)
+            KingfisherAsyncImage(url: URL(string: user.profilePhoto)!)
             VStack(alignment: .leading) {
-                Text(name)
+                Text(user.name)
                     .font(.title)
                     .lineLimit(1)
 
-                Text("Online")
+                Text(user.status)
                     .font(.caption)
                     .foregroundColor(Color("bcolor"))
             }

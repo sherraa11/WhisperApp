@@ -13,7 +13,6 @@ import FirebaseFirestoreSwift
 final class FirestoreManager {
     static let shared = FirestoreManager()
 
-    
     let db = Firestore.firestore()
     private init(){ }
     
@@ -41,7 +40,6 @@ final class FirestoreManager {
         }
         return "didnt get the phoneNumber"
     }
-    
     /*
      this function create a user in firebase collectoin as UserModel uid ,name , status , phone
      */
@@ -53,7 +51,6 @@ final class FirestoreManager {
             }
         }
     }
-    
     /*
      Check user if he sign up before by comparing every uesr uid with
      the current user id if ture it will chagne a userDefaults value "showHome" to true
@@ -91,11 +88,9 @@ final class FirestoreManager {
     }
     /*
      this function used to search with current user id in firebase collection "chatrooms"
-     and if the user exisit , it will get back the other userId we chatting with
-     so the getUserFriendsList function will take all userIds got back and make alist of them as UserModel
+     and if the user exisit , it will get back the chat document and lastMessage etc ...
      */
-    
-    func getChatUserIDs(completion: @escaping ([String]) -> Void) {
+    func getAllFriendUserModel(completion: @escaping ([UserHomeModel]) -> Void) {
         let currentUserID = getCurrentUserID()
         db.collection("chatrooms")
             .whereField("userIds", arrayContains: currentUserID)
@@ -104,31 +99,37 @@ final class FirestoreManager {
                     print("Error getting chat rooms: \(error.localizedDescription)")
                     completion([])
                 } else {
-                    var chatUsersIds: [String] = []
-                    
+                    var chatUsersModels: [UserHomeModel] = []
                     for document in querySnapshot!.documents {
-                        if let userIds = document["userIds"] as? [String] {
-                            let otherUserID = userIds.first(where: { $0 != currentUserID }) ?? currentUserID
-                            chatUsersIds.append(otherUserID)
+                        if let chatRoomId = document["chatRoomId"] as? String,
+                           let lastMessage = document["lastMessage"] as? String,
+                           let lastMessageSenderId = document["lastMessageSenderId"] as? String,
+                           let lastMessageTimestamp = document["lastMessageTimestamp"] as? Timestamp,
+                           let userIds = document["userIds"] as? [String] {
+                            let userHomeModel = UserHomeModel(chatRoomId: chatRoomId,
+                                                              lastMessage: lastMessage,
+                                                              lastMessageSenderId: lastMessageSenderId,
+                                                              lastMessageTimestamp: lastMessageTimestamp.dateValue(),
+                                                              userIds: userIds)
+                            chatUsersModels.append(userHomeModel)
                         }
                     }
-                    completion(chatUsersIds)
+                    completion(chatUsersModels)
                 }
             }
-    }
+        }
     /*
-     this function use the returned users that have a chat with the current user and get their
-     data to display them in the home view
+     this function use the returned CombinedUserModel of UserModel and UserHomeModel to handle the home view and the chat person data
      */
-    
-    func getUserFriendsList(completion: @escaping ([UserModel]) -> Void) {
-        var friendsList: [UserModel] = []
-        getChatUserIDs { data in
+    func getCombinedUserModel(completion: @escaping ([CombinedUserModel]) -> Void) {
+        getAllFriendUserModel { userHomeModels in
+            var combinedUsers: [CombinedUserModel] = []
+            var userModelList: [UserModel] = [] // Collect UserModels
             let dispatchGroup = DispatchGroup()
-            let semaphore = DispatchSemaphore(value: 1)
-            for otherUserId in data {
+            for userHomeModel in userHomeModels {
                 dispatchGroup.enter()
-                self.db.collection("friends").document(otherUserId).getDocument { (document, error) in
+                let otherUserID = userHomeModel.userIds.first(where: { $0 != self.getCurrentUserID() }) ?? self.getCurrentUserID()
+                self.db.collection("friends").document(otherUserID).getDocument { (document, error) in
                     defer {
                         dispatchGroup.leave()
                     }
@@ -143,20 +144,21 @@ final class FirestoreManager {
                           let status = document["status"] as? String else {
                         return
                     }
-                    let user = UserModel(id: otherUserId , name: self.getCurrentUserID() == otherUserId ?  "Me (You)" : name, phone: phone, profilePhoto: profilePhoto, status: status)
-                    semaphore.wait()
-                    friendsList.append(user)
-                    semaphore.signal()
+                    let userModel = UserModel(id: otherUserID, name: self.getCurrentUserID() == otherUserID ? "Me (You)" : name, phone: phone, profilePhoto: profilePhoto, status: status)
+                    // Append the UserModel to the list
+                    userModelList.append(userModel)
+                    let combinedUser = CombinedUserModel(id: UUID().uuidString, userHomeModel: userHomeModel, userModel: userModel)
+                    combinedUsers.append(combinedUser)
                 }
             }
             dispatchGroup.notify(queue: .main) {
                 // All asynchronous tasks completed
-                completion(friendsList) // Signal completion and pass friendsList
+                // Return the combinedUsers list
+                completion(combinedUsers)
             }
         }
     }
-    
-//    get all data from firebase to perform a better search [weak self] helps prevent a strong reference cycle(retain cycles)
+    //    get all data from firebase to perform a better search [weak self] helps prevent a strong reference cycle(retain cycles)
     func getData(completion: @escaping ([UserModel]?) -> Void) {
         db.collection("friends").getDocuments {[weak self] snapshot, error in
             guard let _ = self else { return }
@@ -165,7 +167,7 @@ final class FirestoreManager {
                 return
             }
             guard let snapshot = snapshot else {
-                completion(nil) 
+                completion(nil)
                 return
             }
             var friendsList = [UserModel]()
@@ -186,5 +188,4 @@ final class FirestoreManager {
             completion(friendsList)
         }
     }
-    
 }

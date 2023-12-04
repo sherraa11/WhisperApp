@@ -10,12 +10,14 @@ import Firebase
 
 class HomeViewModel : ObservableObject {
     @Published var allUserList = [UserModel]()
-    @Published var friendList = [UserModel]()
+    @Published var friendList = [CombinedUserModel]()
     @Published var searchText : String = ""
+    @Published var isLoading : Bool = true
 
     init(){
         getAllUsers()
         getFriendsList()
+        setupChatroomListener()
     }
 //    check if user searching
     func isSearching()  -> Bool {
@@ -25,6 +27,7 @@ class HomeViewModel : ObservableObject {
             return true
         }
     }
+
 //    filter data based on user search (phone , name)
     var filteredFriends: [UserModel] {
         guard !searchText.isEmpty else { return allUserList }
@@ -34,21 +37,29 @@ class HomeViewModel : ObservableObject {
         }
     }
 //    get all users with chat to view at home
-    func getFriendsList(){
-        let chatroomsCollectionRef = Firestore.firestore().collection("chatrooms")
-        // Add a snapshot listener to the chatrooms collection
-        chatroomsCollectionRef.addSnapshotListener { querySnapshot, error in
-            guard let snapshot = querySnapshot else {
-                print("Error fetching chatrooms: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            if !snapshot.documentChanges.isEmpty {
-                FirestoreManager.shared.getUserFriendsList { returnedFriendList in
-                    self.friendList = returnedFriendList
+    func getFriendsList() {
+        FirestoreManager.shared.getCombinedUserModel { returnedCombinedUsers in
+            let sortedCombinedUsers = returnedCombinedUsers.sorted { $0.userHomeModel.lastMessageTimestamp > $1.userHomeModel.lastMessageTimestamp }
+            self.friendList = sortedCombinedUsers
+            self.isLoading = sortedCombinedUsers.isEmpty
+           }
+       }
+    
+    func setupChatroomListener() {
+            let chatroomsCollectionRef = Firestore.firestore().collection("chatrooms")
+            // Add a snapshot listener to the chatrooms collection
+            chatroomsCollectionRef.addSnapshotListener { [weak self] querySnapshot, error in
+                guard let snapshot = querySnapshot else {
+                    print("Error fetching chatrooms: \(error?.localizedDescription ?? "Unknown error")")
+                    return
+                }
+                
+                if !snapshot.documentChanges.isEmpty {
+                    // When changes occur, update the friendList
+                    self?.getFriendsList()
                 }
             }
         }
-    }
   
 // i wanted to perform a better search experience but it should make the search from firebase
     func getAllUsers() {

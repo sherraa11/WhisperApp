@@ -13,8 +13,7 @@ import FirebaseFirestoreSwift
 class MessagesManager: ObservableObject {
     static let shared = MessagesManager()
     @Published private(set) var messages: [MessageModel] = []
-    @Published var lastMessageId: String = ""
-    @Published var lastMessageDetails : LastMessageDeatils?
+    @Published var lastMessageId: String?
     
     // Create an instance of our Firestore database
     let db = Firestore.firestore()

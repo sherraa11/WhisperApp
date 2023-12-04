@@ -1,21 +1,21 @@
 //
-//  RowSearchView.swift
+//  RowView.swift
 //  WhisperProject
 //
-//  Created by Abdelrahman Shera on 03/12/2023.
+//  Created by Abdelrahman Shera on 18/11/2023.
 //
 
 import SwiftUI
 
-struct RowView: View {
-    let UserView : CombinedUserModel
+struct RowSearchView: View {
+    let user : UserModel
     var body: some View {
         HStack(spacing: 20) {
-            KingfisherAsyncImage(url: URL(string:UserView.userModel.profilePhoto)!)
+            KingfisherAsyncImage(url: URL(string:user.profilePhoto)!)
             VStack(alignment: .leading) {
-                Text(UserView.userModel.name)
+                Text(user.name)
                     .font(.title2)
-                Text(UserView.userHomeModel.lastMessage)
+                Text(user.phone)
                     .font(.caption)
                     .foregroundColor(.gray)
             }
@@ -23,6 +23,4 @@ struct RowView: View {
         }.padding(.vertical, 8)
     }
 }
-
-
 
