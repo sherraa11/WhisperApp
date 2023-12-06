@@ -34,10 +34,15 @@ struct HomeView: View {
                     }
                 }else{
                     List(vm.friendList){ friend in
-                        NavigationLink {
-                            ChatView(user: friend.userModel)
-                        } label: {
+                        ZStack {
                             RowView(UserView: friend)
+                            NavigationLink {
+                                ChatView(user: friend.userModel)
+                            } label: {
+                                
+                            }.buttonStyle(.plain)
+                                .frame(height: 0)
+                            .opacity(0)
                         }
                     }
                 }

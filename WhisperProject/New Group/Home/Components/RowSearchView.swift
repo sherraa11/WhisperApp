@@ -15,7 +15,7 @@ struct RowSearchView: View {
             VStack(alignment: .leading) {
                 Text(user.name)
                     .font(.title2)
-                Text(user.phone)
+                Text(user.phone.dropFirst(2))
                     .font(.caption)
                     .foregroundColor(.gray)
             }
