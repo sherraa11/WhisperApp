@@ -16,7 +16,7 @@ struct WhisperProjectApp: App {
             RootView().preferredColorScheme(.light)
         }
     }
-    
+     
     
     
     class AppDelegate: NSObject , UIApplicationDelegate {

@@ -42,12 +42,13 @@ struct HomeView: View {
                                 
                             }.buttonStyle(.plain)
                                 .frame(height: 0)
-                            .opacity(0)
+                                .opacity(0)
                         }
                     }
                 }
             }.listStyle(.plain)
                 .navigationTitle("Chats")
+                .navigationBarTitleDisplayMode(.inline)
                 .onAppear{
                     UserDefaults.standard.set( true, forKey: "showHome")
                     DispatchQueue.main.asyncAfter(deadline: .now()+2){
@@ -59,7 +60,8 @@ struct HomeView: View {
                         }
                     }
                 }
-            .searchable(text: $vm.searchText , placement: .navigationBarDrawer(displayMode: .automatic))
+                .searchable(text: $vm.searchText , placement: .navigationBarDrawer(displayMode: .always))
+                .navigationBarBackButtonHidden()
         }
     }
 }

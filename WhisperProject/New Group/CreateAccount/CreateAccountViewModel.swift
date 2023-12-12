@@ -11,8 +11,10 @@ import PhotosUI
 
 class CreateAccountViewModel : ObservableObject {
     @Published var name : String = ""
+    @Published var username : String = ""
     @Published var status : String = ""
     @Published var showNameError : Bool = false
+    @Published var showUserNameError : Bool = false
     @Published var showStatusError : Bool = false
     @Published var showImageError : Bool = false
     @Published var showHome : Bool = false
@@ -36,8 +38,13 @@ class CreateAccountViewModel : ObservableObject {
             }
         }
     }
-
+    
     func CreateUser() {
+        if username.isEmpty {
+            showUserNameError = true
+        } else {
+            showUserNameError = false
+        }
         if selectedImage == nil {
             showImageError = true
         } else {

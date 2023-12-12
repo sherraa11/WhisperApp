@@ -189,32 +189,28 @@ final class FirestoreManager {
         }
     }
     
-    func getCurrentUserData() -> UserModel? {
-        let semaphore = DispatchSemaphore(value: 0)
-        var currentUser: UserModel?
-        let currentUserID = FirestoreManager.shared.getCurrentUserID()
+    func getCurrentUserData(completion: @escaping (UserModel?) -> Void) {
+         let currentUserID = FirestoreManager.shared.getCurrentUserID()
         db.collection("friends").document(currentUserID).getDocument { document, error in
-            defer {
-                semaphore.signal()
-            }
-            
             if let error = error {
                 print("Error getting document: \(error)")
+                completion(nil)
                 return
             }
-
+            
+            var currentUser: UserModel?
             if let document = document, document.exists {
                 let id = document.documentID
                 let name = document["name"] as? String ?? "name"
                 let phone = document["phone"] as? String ?? "phone"
                 let profilePhoto = document["profilePhoto"] as? String ?? "profilePhoto"
                 let status = document["status"] as? String ?? "status"
-
+                
                 currentUser = UserModel(id: id, name: name, phone: phone, profilePhoto: profilePhoto, status: status)
             }
+            
+            completion(currentUser)
         }
-
-        _ = semaphore.wait(timeout: .distantFuture)
-        return currentUser
     }
+
 }

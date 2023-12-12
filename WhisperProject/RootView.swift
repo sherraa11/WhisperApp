@@ -16,7 +16,7 @@ struct RootView: View {
             }else if !showHome {
                 AuthentecationView()
             }else if showHome {
-                HomeView()
+                HomeTabView()
             }
     }
 }

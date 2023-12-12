@@ -32,6 +32,7 @@ class AuthentecationViewModel : ObservableObject {
             }
             AuthentecationManager.shared.SignUp(phoneNumber: truePhoneNumber() , cityCode: cityCode ) { error in
                 if let error {
+                    self.phoneNumberError = true
                     print(error)
                 }else {
                     self.showVerify.toggle()

@@ -8,81 +8,191 @@
 import SwiftUI
 
 struct AuthentecationVerifyView: View {
-    @StateObject private var vm = AuthentecationVerifyViewModel()
+    @StateObject var vm = AuthentecationVerifyViewModel()
     @Environment(\.dismiss) var dismiss
-    @FocusState private var isTextFieldFoucsed : Bool
     
+    @State  var pin: String = ""
+    let pinLength = 6 // Define the length of the PIN
+  
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             ZStack {
                 Color.white
                     .ignoresSafeArea()
-                VStack(spacing: 20){
-                    
-                    Image(.icon4)
-                        .resizable()
-                        .frame(width: 200, height: 200)
-                        .overlay(
+                VStack( spacing: 5){
+                    HStack{
+                        VStack(alignment: .leading, spacing: 5){
                             Image(systemName:"chevron.left")
-                                .foregroundStyle(Color("middleColor"))
+                                .foregroundStyle(.black)
                                 .font(.system(size: 25))
-                                .fontWeight(.bold)
-                                .offset (x:-170 ,y: -245)
+                                .fontWeight(.light)
+                                .offset(y: 15)
                                 .onTapGesture {
                                     self.dismiss()
                                 }
-                        )
-                    
-                    Text("Verification Code")
-                        .foregroundStyle(Color("dark1"))
-                        .font(.largeTitle)
-                        .fontWeight(.heavy)
-                    
-                    Text("Please Enter The Verification Code")
-                        .font(.system(size: 15))
-                        .multilineTextAlignment(.center)
-                        .font(.body)
-                        .foregroundColor(.gray)
-                    
-                    HStack{
-                        TextField("Code ", text: $vm.verificationCode)
-                            .keyboardType(.numberPad)
-                            .padding()
-                            .background(Color("bcolor"))
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .focused($isTextFieldFoucsed)
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(vm.verificationCodeError ? Color.red : Color.clear , lineWidth : 1.5)
-                            }
+                            
+                            Text("OTP sent")
+                                .foregroundColor(Color.black)
+                                .font(.custom("Poppins", size: 20))
+                                .fontWeight(.semibold)
+                                .padding(.top , 45)
+                            
+                            Text("Enter the OTP sent to you")
+                                .foregroundColor(Color.black)
+                                .font(.custom("Poppins", size: 16))
+                                .fontWeight(.medium)
+                                .opacity(0.7)
+                                .padding(.bottom , 10)
+                        }.padding(.horizontal)
+                        Spacer()
                     }
+                    PINView
+                    Spacer()
+                   
+                    
+        
+                   
+                   
                     if vm.isLoading {
                         ProgressView()
                             .tint(Color.white)
-                            .frame(width: UIScreen.main.bounds.width - 30, height: 50)
-                            .background(Color("middleColor"))
+                            .frame(width: UIScreen.main.bounds.width - 60, height: 50)
+                            .background(.terqwaz)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.horizontal , 15)
                             .disabled(true)
-                    }else { Button(action: {
-                        vm.VerfiyOTP()
-                        isTextFieldFoucsed = false
-                    }, label: {
-                        Text("Verify")
-                            .frame(width: UIScreen.main.bounds.width - 30,height: 50)
-                            .background(Color("middleColor"))
-                            .foregroundStyle(Color.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    })
+                            .padding(.bottom, 40)
+                    } else {
+                        Button(action: {
+                            vm.VerfiyOTP()
+                        }, label: {
+                            Text("Next")
+                                .font(.custom("Poppins", size: 18))
+                                .fontWeight(.semibold)
+                                .frame(width: UIScreen.main.bounds.width - 60, height: 50)
+                                .background(.terqwaz)
+                                .foregroundStyle(Color.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .padding(.horizontal , 15)
+                        }).padding(.bottom, 40)
                     }
+                   
+                }.padding()
+              
+            }.navigationDestination(isPresented: .constant(false), destination: {
+                HomeTabView()
+            })
+            .navigationDestination(isPresented: $vm.showCreateAccount, destination: {
+                CreateAccountView()
+            })
+            .toolbar(.hidden)
+        }
+      
+    }
+    
+    var PINView : some View {
+        VStack {
+            HStack(spacing: 10) {
+                ForEach(0..<pinLength, id: \.self) { index in
+                    let digit = index < pin.count ? String(pin[pin.index(pin.startIndex, offsetBy: index)]) : ""
+                    
+                    RoundedRectangle(cornerRadius: 10)
+                        .frame(width: 53, height: 50)
+                        .foregroundColor(.terqwaz)
+                        .allowsHitTesting(false)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(vm.verificationCodeError ? Color.red : Color.clear , lineWidth : 2)
+                        }
+                        .overlay(
+                            Text(digit)
+                                .font(.custom("Poppins", size: 16))
+                                .fontWeight(.medium)
+                                .foregroundColor(.white)
+                                .allowsHitTesting(false)
+                        )
+                        .background(
+                            TextEditor(text: $pin)
+                                .foregroundColor(.clear)
+                                .background(Color.clear)
+                                .frame(width: 50, height: 50)
+                                .opacity(0.05)
+                                .textContentType(.oneTimeCode)
+                                
+                        )
                 }
-                .sheet(isPresented: $vm.showCreateAccount, content: {
-                    CreateAccountView().presentationDetents([ .large , .fraction(0.8)]).cornerRadius(30, corners: [.topLeft ,.topRight])
-                })
-                .padding()
-                .navigationBarBackButtonHidden()
-            }.navigationDestination(isPresented:$vm.showHome) {
-                HomeView()
-            }
-        }.toolbar(.hidden)
+            }.onChange(of: pin, { oldValue, newValue in
+                if newValue.count == pinLength {
+                    vm.verificationCode = newValue
+                    vm.VerfiyOTP()
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
+                
+            })
+            .padding(.horizontal)
+            
+        }
     }
 }
+#Preview {
+    AuthentecationVerifyView()
+   
+}
+
+                
+                
+         
+                //                    HStack{
+                //                        TextField("Code ", text: $vm.verificationCode)
+                //                            .keyboardType(.numberPad)
+                //                            .padding()
+                //                            .background(Color("bcolor"))
+                //                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                //                            .focused($isTextFieldFoucsed)
+                //                            .overlay {
+                //                                RoundedRectangle(cornerRadius: 10)
+                //                                    .stroke(vm.verificationCodeError ? Color.red : Color.clear , lineWidth : 1.5)
+                //                            }
+                //                    }
+                //                    if vm.isLoading {
+                //                        ProgressView()
+                //                            .tint(Color.white)
+                //                            .frame(width: UIScreen.main.bounds.width - 30, height: 50)
+                //                            .background(Color("middleColor"))
+                //                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                //                            .disabled(true)
+                //                    }else { Button(action: {
+                //                        vm.VerfiyOTP()
+                //                        isTextFieldFoucsed = false
+                //                    }, label: {
+                //                        Text("Verify")
+                //                            .frame(width: UIScreen.main.bounds.width - 30,height: 50)
+                //                            .background(Color("middleColor"))
+                //                            .foregroundStyle(Color.white)
+                //                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                //                    })
+                //                    }
+                //                }
+                //                .sheet(isPresented: $vm.showCreateAccount, content: {
+                //                    CreateAccountView().presentationDetents([ .large , .fraction(0.8)]).cornerRadius(30, corners: [.topLeft ,.topRight])
+                //                })
+                //                .padding()
+                //                .navigationBarBackButtonHidden()
+                //            }.navigationDestination(isPresented:$vm.showHome) {
+                //                HomeTabView()
+                //            }
+         
+    
+    
+
+
+
+
+        
+        
+        
+        
+    
+
+
+

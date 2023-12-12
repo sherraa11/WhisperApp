@@ -13,39 +13,34 @@ enum OnboardingModel {
     var header : String {
         switch self {
         case.First :
-            return "Hello !"
+            return "Connect with Friends \nand Family"
         case.Second :
-            return "Features"
+            return "Make new friends \nwith ease"
         case.Third :
-            return "Let's setup"
+            return "Express yourself to \nthe world"
         }
     }
     
     var body : String {
         switch self {
         case.First:
-            return """
-                     Welcome to Whisper! Connect and chat with ease.
-                    Ready to start chatting? Let's get you set up!
-                    """
+            return "Connecting with Family and Friends \nprovides a sense of belonging and \nsecurity"
+                    
         case.Second:
-            return """
-                     Send and receive messages in real-time.
-                     Chat with friends anytime, anywhere.
-                     """
+            return "Allowing you to make new Friends is   \nour Number one priority....."
         case.Third:
-            return "Tap 'Start' to begin your first conversation"
+            return "Let your voice be heard on the internet \nthrough Momento features on the App \nwithout restrictions"
         }
     }
     
-    var icon: Image {
+    var image : Image {
         switch self {
         case.First:
-            return Image(.icon1)
+            return Image(.ONBOARDING_1)
         case.Second:
-            return Image(.icon2)
+            return Image(.ONBOARDING_2)
         case.Third:
-            return Image(.icon3)
+            return Image(.ONBOARDING_3)
         }
     }
 }
