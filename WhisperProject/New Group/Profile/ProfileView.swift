@@ -11,18 +11,13 @@ import Shimmer
 
 struct ProfileView: View {
     @ObservedObject var vm = ProfileViewModel()
+    @State var select : String = ""
     var body: some View {
         NavigationStack{
             VStack{
                 HStack{
                     if let image = vm.photoURL{
                         KFImage(image)
-                            .onFailure({ error in
-                                Image(systemName: "person.circle")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 67 , height: 67)
-                            })
                             .placeholder({ loading in
                                 Circle()
                                     .frame(width: 67 , height: 67)
@@ -38,7 +33,7 @@ struct ProfileView: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 67 , height: 67)
                             .clipShape(Circle())
-                            
+                        
                     }else{
                         Circle()
                             .frame(width: 67 , height: 67)
@@ -60,11 +55,13 @@ struct ProfileView: View {
                         }
                     }
                     Spacer()
-                    Image(systemName: "gear")
-                        .font(.system(size: 20))
-                        .onTapGesture {
-                            vm.showEditProfile.toggle()
-                        }
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "gear")
+                            .font(.system(size: 20))
+                            .foregroundStyle(.black)
+                    }
                 }
                 .padding(.horizontal , 28)
                 HStack{

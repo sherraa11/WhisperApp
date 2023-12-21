@@ -52,7 +52,8 @@ struct PostView: View {
     var body: some View {
         VStack{
             Color.textFieldbackground
-                .frame(width: .infinity, height: 5)
+                
+                .frame(height: 5)
                 .padding(.bottom , 8)
             HStack{
                 Image(systemName: "person.circle")
