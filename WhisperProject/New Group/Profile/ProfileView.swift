@@ -7,32 +7,57 @@
 import SwiftUI
 import Kingfisher
 import SwiftfulLoadingIndicators
+import Shimmer
 
 struct ProfileView: View {
     @ObservedObject var vm = ProfileViewModel()
-    
-    
     var body: some View {
         NavigationStack{
             VStack{
                 HStack{
-                    Spacer()
-                    Text("My Profile")
-                        .font(.custom("Poppins", size: 18))
-                        .fontWeight(.semibold)
-                    Spacer()
-                }.padding(.horizontal)
-                HStack{
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .frame(width: 67 , height: 67)
-                    VStack{
-                        Text("Oyin Dolapo")
+                    if let image = vm.photoURL{
+                        KFImage(image)
+                            .onFailure({ error in
+                                Image(systemName: "person.circle")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 67 , height: 67)
+                            })
+                            .placeholder({ loading in
+                                Circle()
+                                    .frame(width: 67 , height: 67)
+                                    .foregroundStyle(.white)
+                                    .overlay{
+                                        Circle()
+                                            .stroke(.terqwaz ,lineWidth: 1)
+                                        ProgressView()
+                                            .tint(.terqwaz)
+                                    }
+                            })
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 67 , height: 67)
+                            .clipShape(Circle())
+                            
+                    }else{
+                        Circle()
+                            .frame(width: 67 , height: 67)
+                            .foregroundStyle(.white)
+                            .redacted(reason: .placeholder)
+                            .shimmering()
+                    }
+                    VStack{HStack{
+                        Text(vm.updatedFullName)
                             .font(.custom("Poppins", size: 18))
                             .fontWeight(.semibold)
-                        Text("Abdokuta, Ogun")
-                            .font(.custom("Poppins", size: 14))
-                            .fontWeight(.semibold)
+                        Spacer()
+                    }
+                        HStack{
+                            Text(vm.updatedUserName)
+                                .font(.custom("Poppins", size: 14))
+                                .fontWeight(.semibold)
+                            Spacer()
+                        }
                     }
                     Spacer()
                     Image(systemName: "gear")
@@ -40,17 +65,18 @@ struct ProfileView: View {
                         .onTapGesture {
                             vm.showEditProfile.toggle()
                         }
-                }.padding(.top , 40)
-                    .padding(.horizontal , 28)
-                
-                Text("I’m a postive person. I love to travel and eat Always available for chat")
-                    .font(.custom("Poppins", size: 12))
-                    .padding(.trailing , 50)
-                //                    .frame(width: UIScreen.main.bounds.width - 100)
-                    .fontWeight(.medium)
-                    .padding(.horizontal)
-                    .padding(.top , 12)
-                
+                }
+                .padding(.horizontal , 28)
+                HStack{
+                    
+                    Text(vm.updatedStatus)
+                        .font(.custom("Poppins", size: 12))
+                        .padding(.trailing , 50)
+                        .fontWeight(.medium)
+                        .padding(.horizontal, 30)
+                        .padding(.top , 12)
+                    Spacer()
+                }
                 Button(action: {
                     vm.showEditProfile.toggle()
                 }, label: {
@@ -121,13 +147,21 @@ struct ProfileView: View {
                             }
                         }
                     }
-                    
                 }.scrollIndicators(.hidden)
-            }.fullScreenCover(isPresented: $vm.showEditProfile, content: {
-                EditProfileView()
-            })
-           
-            .navigationBarBackButtonHidden()
+            }.navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("My Profile")
+                .navigationBarBackButtonHidden()
+                .onReceive(vm.$shouldRefreshData) { shouldRefresh in
+                    if shouldRefresh {
+                        vm.getCurrentUserInfo() // Fetch new data when the flag is true
+                        vm.shouldRefreshData = false // Reset the flag
+                    }
+                }
+                .fullScreenCover(isPresented: $vm.showEditProfile, onDismiss: {
+                    vm.shouldRefreshData = true
+                }, content: {
+                    EditProfileView()
+                })
         }
     }
 }

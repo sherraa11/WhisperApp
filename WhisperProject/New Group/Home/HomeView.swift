@@ -2,85 +2,181 @@
 //  HomeView.swift
 //  WhisperProject
 //
-//  Created by Abdelrahman Shera on 17/11/2023.
+//  Created by Abdelrahman Shera on 12/12/2023.
 //
 
 import SwiftUI
-import SwiftfulLoadingIndicators
 
 struct HomeView: View {
-    @ObservedObject var vm = HomeViewModel()
-    @State var text : String = ""
-    @State var displayedText : String = ""
+    @State var searchText : String = ""
+    
     var body: some View {
         NavigationStack{
-            VStack {
-                if vm.isSearching() {
-                    List(vm.filteredFriends) { friend in
-                        NavigationLink {
-                            ChatView(user: friend)
-                        } label: {
-                            RowSearchView(user: friend)
+            VStack{
+                RoundedRectangle(cornerRadius: 10)
+                    .frame(width: 335, height: 34)
+                    .foregroundStyle(.clear)
+                    .overlay{
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(.terqwaz , lineWidth:1)
+                        HStack{
+                            Image(systemName: "magnifyingglass")
+                                .font(.system(size: 10))
+                                .padding(.horizontal ,9)
+                                .foregroundStyle(.gray)
+                            Spacer()
                         }
-                    }
-                }else if vm.isLoading {
-                    VStack {
-                        LoadingIndicator(animation: .threeBallsBouncing, color: .primary , size: .medium, speed: .normal)
-                            .offset(y: -20)
-                        Text(displayedText)
+                        TextField("Type something ......",text: $searchText)
+                            .font(.custom("Poppins", size: 10))
+                        
                             .fontWeight(.medium)
-                            .font(.system(size: 18))
-                            .foregroundStyle(.primary)
+                            .padding(.leading , 25)
                     }
-                }else{
-                    List(vm.friendList){ friend in
-                        ZStack {
-                            RowView(UserView: friend)
-                            NavigationLink {
-                                ChatView(user: friend.userModel)
-                            } label: {
-                                
-                            }.buttonStyle(.plain)
-                                .frame(height: 0)
-                                .opacity(0)
-                        }
+                ScrollView{
+                    ForEach(1..<10){ index in
+                        PostView()
                     }
-                }
-            }.listStyle(.plain)
-                .navigationTitle("Chats")
-                .navigationBarTitleDisplayMode(.inline)
-                .onAppear{
-                    UserDefaults.standard.set( true, forKey: "showHome")
-                    DispatchQueue.main.asyncAfter(deadline: .now()+2){
-                        if vm.isLoading {
-                            withAnimation {
-                                text = "Start chatting with friends today!"
-                                displayTextLetterByLetter()
-                            }
-                        }
-                    }
-                }
-                .searchable(text: $vm.searchText , placement: .navigationBarDrawer(displayMode: .always))
-                .navigationBarBackButtonHidden()
+                }.scrollIndicators(.hidden)
+                    .toolbar(.visible)
+            }
         }
     }
 }
-
 
 #Preview {
     HomeView()
 }
 
-extension HomeView {
-    func displayTextLetterByLetter() {
-        let timer = Timer.scheduledTimer(withTimeInterval: 0.12, repeats: true) { timer in
-            if !text.isEmpty {
-                displayedText += String(text.removeFirst())
-            } else {
-                timer.invalidate()
+struct PostView: View {
+    var post : String = "hello how are you guys  fsdafhdshfhdsahf hdshfhsda hh' fdsafdsf dsf dsf dsfdsf dsf sdfds"
+    var body: some View {
+        VStack{
+            Color.textFieldbackground
+                .frame(width: .infinity, height: 5)
+                .padding(.bottom , 8)
+            HStack{
+                Image(systemName: "person.circle")
+                    .resizable()
+                    .frame(width: 46 , height: 46)
+                    .clipShape(Circle())
+                VStack(alignment:.leading){
+                    Text("Oyin Dolapo")
+                        .font(.custom("Poppins", size: 18))
+                        .fontWeight(.semibold)
+                    Text("Oyin Dolapo")
+                        .font(.custom("Poppins", size: 12))
+                        .fontWeight(.medium)
+                }
+                Spacer()
+            }.padding(.horizontal , 20)
+            HStack{
+                Text("\(post)")
+                    .font(.custom("Poppins", size: 14))
+                    .multilineTextAlignment(.leading)
+                    .fontWeight(.medium)
+                    .lineLimit(nil)
+                    .padding(.horizontal , 20)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer()
             }
-        }
-        timer.fire()
+            Image(.icon2)
+                .resizable()
+                .scaledToFill()
+                .frame(width: UIScreen.main.bounds.width - 54, height: UIScreen.main.bounds.height / 3)
+                .clipShape(.rect(cornerRadius: 10))
+            
+            HStack{
+                Image(systemName: "heart")
+                    .padding(.leading,20)
+                    .font(.system(size: 20))
+                
+                
+                Text("24")
+                    .font(.custom("Poppins", size: 12))
+                    .fontWeight(.medium)
+                
+                Image(systemName: "ellipsis.message")
+                    .padding(.leading,3)
+                    .font(.system(size: 17))
+                
+                
+                Text("8")
+                    .font(.custom("Poppins", size: 12))
+                    .fontWeight(.medium)
+                
+                
+                Spacer()
+            }.padding(.top , 7)
+        }.padding(.top , 8)
     }
-    
 }
+        
+//        VStack {
+//            
+//            RoundedRectangle(cornerRadius: 10)
+//                .frame(width: UIScreen.main.bounds.width , height: UIScreen.main.bounds.height / 3 + 170)
+//                .foregroundStyle(.textFieldbackground)
+//                .overlay {
+//                    VStack{
+//                        VStack{
+//                            HStack{
+//                                Image(systemName: "person.circle")
+//                                    .resizable()
+//                                    .frame(width: 46 , height: 46)
+//                                    .clipShape(Circle())
+//                                VStack(alignment:.leading){
+//                                    Text("Oyin Dolapo")
+//                                        .font(.custom("Poppins", size: 18))
+//                                        .fontWeight(.semibold)
+//                                    Text("Oyin Dolapo")
+//                                        .font(.custom("Poppins", size: 12))
+//                                        .fontWeight(.medium)
+//                                }
+//                                Spacer()
+//                            }.padding(.horizontal , 20)
+//                        }
+//                        Text("\(post)")
+//                        
+//                            .font(.custom("Poppins", size: 14))
+//                            .multilineTextAlignment(.leading)
+//                            .fontWeight(.medium)
+//                            .lineLimit(nil)
+//                            .padding(.horizontal , 20)
+//                            .fixedSize(horizontal: false, vertical: true)
+//                        
+//                        Image(.icon2)
+//                            .resizable()
+//                            .scaledToFill()
+//                            .frame(width: UIScreen.main.bounds.width - 54, height: UIScreen.main.bounds.height / 3)
+//                            .clipShape(.rect(cornerRadius: 10))
+//                            .overlay{
+//                                RoundedRectangle(cornerRadius: 10)
+//                                    .stroke(lineWidth: 1)
+//                            }
+//                        HStack{
+//                            Image(systemName: "heart")
+//                                .padding(.leading,20)
+//                                .font(.system(size: 20))
+//                               
+//                            
+//                            Text("24")
+//                                .font(.custom("Poppins", size: 12))
+//                                .fontWeight(.medium)
+//                            
+//                            Image(systemName: "ellipsis.message")
+//                                .padding(.leading,3)
+//                                .font(.system(size: 17))
+//                            
+//                                
+//                            Text("8")
+//                                .font(.custom("Poppins", size: 12))
+//                                .fontWeight(.medium)
+//                            
+//                            
+//                            Spacer()
+//                        }.padding(.top , 7)
+//                    }
+//                    
+//                }
+//        }
+

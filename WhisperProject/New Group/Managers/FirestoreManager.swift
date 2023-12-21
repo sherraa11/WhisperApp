@@ -43,8 +43,8 @@ final class FirestoreManager {
     /*
      this function create a user in firebase collectoin as UserModel uid ,name , status , phone
      */
-    func createUser(name: String , status : String){
-        db.collection("friends").document(getCurrentUserID()).setData(["name" : name , "status" : status ,"id" : getCurrentUserID(), "phone" : getCurrentUserPhoneNumber()]) { error in
+    func createUser(name: String , status : String , username: String){
+        db.collection("friends").document(getCurrentUserID()).setData(["name" : name , "status" : status ,"id" : getCurrentUserID(), "phone" : getCurrentUserPhoneNumber(), "username": username]) { error in
             if error != nil{
                 print((error?.localizedDescription)!)
                 return
@@ -141,10 +141,11 @@ final class FirestoreManager {
                           let name = document["name"] as? String,
                           let phone = document["phone"] as? String,
                           let profilePhoto = document["profilePhoto"] as? String,
+                          let username = document["username"] as? String ,
                           let status = document["status"] as? String else {
                         return
                     }
-                    let userModel = UserModel(id: otherUserID, name: self.getCurrentUserID() == otherUserID ? "Me (You)" : name, phone: phone, profilePhoto: profilePhoto, status: status)
+                    let userModel = UserModel(id: otherUserID, name: self.getCurrentUserID() == otherUserID ? "Me (You)" : name, phone: phone, profilePhoto: profilePhoto, status: status, username: username)
                     // Append the UserModel to the list
                     userModelList.append(userModel)
                     let combinedUser = CombinedUserModel(id: UUID().uuidString, userHomeModel: userHomeModel, userModel: userModel)
@@ -177,11 +178,12 @@ final class FirestoreManager {
                 let phone = document["phone"] as? String ?? "phone"
                 let profilePhoto = document["profilePhoto"] as? String ?? "profilePhoto"
                 let status = document["status"] as? String ?? "status"
+                let username = document["username"] as? String ?? " username "
                 if id == FirestoreManager.shared.getCurrentUserID() {
-                    let me = UserModel(id: id, name: "Me (You)", phone: phone, profilePhoto: profilePhoto, status: status)
+                    let me = UserModel(id: id, name: "Me (You)", phone: phone, profilePhoto: profilePhoto, status: status, username: username)
                     friendsList.append(me)
                 } else {
-                    let friend = UserModel(id: id, name: name, phone: phone, profilePhoto: profilePhoto, status: status)
+                    let friend = UserModel(id: id, name: name, phone: phone, profilePhoto: profilePhoto, status: status, username: username)
                     friendsList.append(friend)
                 }
             }
@@ -205,12 +207,41 @@ final class FirestoreManager {
                 let phone = document["phone"] as? String ?? "phone"
                 let profilePhoto = document["profilePhoto"] as? String ?? "profilePhoto"
                 let status = document["status"] as? String ?? "status"
+                let username = document["username"] as? String ?? " username "
                 
-                currentUser = UserModel(id: id, name: name, phone: phone, profilePhoto: profilePhoto, status: status)
+                currentUser = UserModel(id: id, name: name, phone: phone, profilePhoto: profilePhoto, status: status, username: username)
             }
             
             completion(currentUser)
         }
     }
+    func updateCurrentUser(name: String? = nil, userName: String? = nil, status: String? = nil, completion: @escaping (Error?) -> Void) {
+        guard let currentUserID = Auth.auth().currentUser?.uid else {
+            completion(NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not authenticated."]))
+            return
+        }
+
+        var updateData: [String: Any] = [:]
+
+        if let newName = name {
+            updateData["name"] = newName
+        }
+        if let newUserName = userName {
+            updateData["username"] = newUserName
+        }
+        if let newStatus = status {
+            updateData["status"] = newStatus
+        }
+
+        db.collection("friends").document(currentUserID).updateData(updateData) { error in
+            if let error = error {
+                print("Error updating user data: \(error.localizedDescription)")
+            }
+            completion(error)
+        }
+    }
+
+
+
 
 }

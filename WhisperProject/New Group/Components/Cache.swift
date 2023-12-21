@@ -17,13 +17,13 @@ struct KingfisherAsyncImage: View {
                 Image(systemName: "person.circle")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 50, height: 50)
+                    .frame(width: 35, height: 35)
                     .clipShape(Circle())
                     .foregroundStyle(.black.opacity(0.7))
             }
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .frame(width: 50, height: 50)
+            .frame(width: 35, height: 35)
             .clipShape(Circle())
         
         

@@ -15,93 +15,76 @@ struct OnBoardingFlow: View {
     
     var body: some View {
         VStack{
+            
+            //MARK: - tab1
             if selectedTab == 1 {
                 OnboardingBaseView(headerText: OnboardingModel.First.header, bodyText: OnboardingModel.First.body, image: OnboardingModel.First.image)
                 Spacer()
                 RepeatedButton(buttonName: buttonName, backgroundColor: .terqwaz, textColor: .white, borderColor: .clear)
                     .padding(.bottom,15)
                     .onTapGesture {
-                        
+                        withAnimation(.smooth) {
                             selectedTab += 1
                             if selectedTab > 3 {
                                 Skip()
-                            
+                            }
                         }
                     }
                 RepeatedButton(buttonName: "Skip", backgroundColor: .white, textColor: .black, borderColor: .black)
+                    .onTapGesture {
+                        withAnimation {
+                            Skip()
+                        }
+                    }
                 Spacer()
+                
+                //MARK: - tab 2
             } else if selectedTab == 2 {
                 OnboardingBaseView(headerText: OnboardingModel.Second.header, bodyText: OnboardingModel.Second.body, image: OnboardingModel.Second.image)
                 Spacer()
                 RepeatedButton(buttonName: buttonName, backgroundColor: .terqwaz, textColor: .white, borderColor: .clear)
                     .padding(.bottom,15)
                     .onTapGesture {
+                        withAnimation (.smooth){
                             selectedTab += 1
-                        if selectedTab > 3 {
-                            Skip()
+                            if selectedTab > 3 {
+                                Skip()
+                            }
                         }
                     }
                 RepeatedButton(buttonName: "Skip", backgroundColor: .white, textColor: .black, borderColor: .black)
+                    .onTapGesture {
+                        withAnimation {
+                            Skip()
+                        }
+                    }
                 Spacer()
+                //MARK: - tab 3
             } else if selectedTab == 3 {
                 OnboardingBaseView(headerText: OnboardingModel.Third.header, bodyText: OnboardingModel.Third.body, image: OnboardingModel.Third.image)
                 Spacer()
-                RepeatedButton(buttonName: buttonName, backgroundColor: .terqwaz, textColor: .white, borderColor: .clear)
+                RepeatedButton(buttonName: "Continue", backgroundColor: .terqwaz, textColor: .white, borderColor: .clear)
                     .padding(.bottom,15)
                     .onTapGesture {
-                                Skip()
+                        withAnimation {
+                            Skip()
+                        }
                     }
                 RepeatedButton(buttonName: "", backgroundColor: .clear, textColor: .clear, borderColor: .clear)
                 Spacer()
             }
-        }.onChange(of: selectedTab) { oldValue, newValue in
-            renameButton()
         }
     }
 }
-            
+
 #Preview {
- OnBoardingFlow()
+    OnBoardingFlow()
 }
 
 
 extension OnBoardingFlow {
-    private var nextButton : some View {
-        
-        Text(buttonName)
-            .font(.custom("Proxima Nova", size: 18))
-            .fontWeight(.semibold)
-            .frame(width: 319, height: 50)
-            .background(Color("middleColor"))
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            .foregroundColor(.white)
-            .padding(.bottom, 10)
-           
-        
-    }
-    private var skipButton : some View {
-        Text("Skip")
-            .font(.custom("Proxima Nova", size: 18))
-            .fontWeight(.semibold)
-            .foregroundColor(Color("middleColor"))
-            .overlay(Text("........").foregroundColor(Color.primary).offset(y: 10))
-            .onTapGesture {
-                Skip()
-            }
-    }
-    
     func Skip()  {
-        withAnimation(.easeInOut) {
-            onBoarding = true
-        }
-        
-    }
-    func renameButton(){
-        if selectedTab == 3 {
-            buttonName = "Continue"
-        } else {
-            buttonName = "Next"
-        }
+        onBoarding = true
     }
     struct RepeatedButton : View {
         let buttonName: String
@@ -120,7 +103,6 @@ extension OnBoardingFlow {
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(borderColor, lineWidth: 1.0)
                 }
-            
         }
     }
 }

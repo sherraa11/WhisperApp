@@ -11,7 +11,6 @@ import SwiftUI
 struct AuthentecationView: View {
     @StateObject private var vm = AuthentecationViewModel()
     @FocusState private var isTextFieldFoucsed : Bool
-    
     @State var selection : Country = Country(name: "Egypt", code: "+01", flag: "")
     var body: some View {
         NavigationStack {
@@ -46,7 +45,6 @@ struct AuthentecationView: View {
                             
                             TextField(text:$vm.phoneNumber) {
                                 Text("Phone number")
-                                    
                                     .font(.custom("Poppins", size: 16))
                                     .fontWeight(.medium)
                                     .foregroundStyle(.black.opacity(0.5))
@@ -59,8 +57,6 @@ struct AuthentecationView: View {
                             }.keyboardType(.numbersAndPunctuation)
                             .frame(height: 50)
                                 .foregroundStyle(.black.opacity(0.5))
-                                
-                        
                     }.overlay {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(vm.phoneNumberError ? Color.red : Color.terqwaz , lineWidth : 1.5)
@@ -80,18 +76,14 @@ struct AuthentecationView: View {
                                 }.foregroundColor(Color.black)
                                     .font(.custom("Poppins", size: 16))
                                     .fontWeight(.medium)
-                                
-                                
                             }.tag(country)
                         }
                     }
-                    
                     .pickerStyle(.wheel)
                     .foregroundStyle(.terqwaz)
                         .onChange(of: selection) { old, new in
                             vm.cityCode = new.code
                         }
-        
                     Spacer()
                     Spacer()
                     if vm.isLoading {
@@ -119,7 +111,6 @@ struct AuthentecationView: View {
                                 .padding(.horizontal , 15)
                         }).padding(.bottom, 40)
                     }
-                    
                 }
                 .padding()
                 .navigationDestination(isPresented: $vm.showVerify) {

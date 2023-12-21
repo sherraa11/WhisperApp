@@ -6,77 +6,72 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct OtherUserProfileView: View {
+    @Environment(\.dismiss) var dismiss
+    @State var user : UserModel
+    @State var showMessaging: Bool = false
     var body: some View {
         NavigationStack{
             VStack{
                 HStack{
-                    Spacer()
-                    Text("Profile")
-                        .font(.custom("Poppins", size: 18))
-                        .fontWeight(.semibold)
-                    Spacer()
-                }.overlay(content: {
-                    HStack{
-                        Image(systemName:"chevron.left")
-                            .foregroundStyle(.black)
-                            .font(.system(size: 25))
-                            .fontWeight(.light)
-                        Spacer()
-                    }
-                })
-                .padding(.horizontal)
-                HStack{
-                    Image(systemName: "person.circle")
+                    KFImage(URL(string: user.profilePhoto))
+                        .placeholder({ loading in
+                            Circle()
+                                .frame(width: 67 , height: 67)
+                                .foregroundStyle(.white)
+                                .overlay{
+                                    Circle()
+                                        .stroke(.terqwaz ,lineWidth: 1)
+                                    ProgressView()
+                                }
+                        })
                         .resizable()
                         .frame(width: 67 , height: 67)
+                        .clipShape(Circle())
                     VStack{
-                        Text("Oyin Dolapo")
-                            .font(.custom("Poppins", size: 18))
-                            .fontWeight(.semibold)
-                        Text("Abdokuta, Ogun")
-                            .font(.custom("Poppins", size: 14))
-                            .fontWeight(.semibold)
+                        HStack{
+                            Text(user.name)
+                                .font(.custom("Poppins", size: 18))
+                                .fontWeight(.semibold)
+                            Spacer()
+                        }
+                        HStack{
+                            Text(user.username)
+                                .font(.custom("Poppins", size: 14))
+                                .fontWeight(.semibold)
+                            Spacer()
+                        }
                     }
                     Spacer()
                     Image(.threedots)
                         .font(.system(size: 20))
-                }.padding(.top , 40)
+                }
                     .padding(.horizontal , 28)
                 HStack{
-                    Text("I’m a postive person. I love to travel and eat Always available for chat")
+                    Text(user.status)
                         .font(.custom("Poppins", size: 12))
-                        .padding(.trailing , 50)
-                    //                    .frame(width: UIScreen.main.bounds.width - 100)
                         .fontWeight(.medium)
-                        .padding(.trailing , 20)
                         .padding(.top , 12)
-                    
-                    
-                    
+                    Spacer()
                     Button(action: {
-                        
+                        showMessaging.toggle()
                     }, label: {
-                        
                         RoundedRectangle(cornerRadius: 20)
                             .frame(width: 45, height: 30)
                             .foregroundStyle(.white)
                             .overlay{
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(.black ,lineWidth: 1)
+                              
                             }.overlay{
                                 Image(systemName: "ellipsis.message")
                                     .font(.system(size: 16))
                                     .foregroundStyle(.black)
                             }
-                            
-                            .padding(.top, 24)
-                            
-                    })
-                    
+                    }).padding(.top , 12)
                     Button(action: {
-                        
                     }, label: {
                         Text("Follow")
                             .font(.custom("Poppins", size: 12))
@@ -85,11 +80,9 @@ struct OtherUserProfileView: View {
                             .background(.terqwaz)
                             .foregroundStyle(Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: 20))
-                            .padding(.top , 24)
+                            .padding(.top , 12)
                     })
                 }.padding(.horizontal ,28 )
-                
-                
                 HStack{Spacer()
                     VStack{
                         Text("87")
@@ -147,14 +140,14 @@ struct OtherUserProfileView: View {
                             }
                         }
                     }
-                    
                 }.scrollIndicators(.hidden)
-            }
-            .navigationBarBackButtonHidden()
+            }.fullScreenCover(isPresented: $showMessaging, content: {
+                MessageingView(user: user)
+            })
+            .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("Profile")
+                .accentColor(.black)
         }
     }
 }
 
-#Preview {
-    OtherUserProfileView()
-}

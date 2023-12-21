@@ -16,8 +16,6 @@ struct OnboardingBaseView: View {
                 image
                     .resizable()
                     .frame(width: 370, height: 380)
-                
-                
                 Group {
                     Text(headerText)
                         .foregroundColor(Color.black)
@@ -25,8 +23,6 @@ struct OnboardingBaseView: View {
                         .fontWeight(.semibold)
                         .lineSpacing(4)
                         .padding(.bottom , 5)
-                    
-                    
                     Text(bodyText)
                         .foregroundColor(Color.primary)
                         .font(.custom("Poppins", size: 16))
@@ -34,20 +30,10 @@ struct OnboardingBaseView: View {
                         .opacity(0.7)
                         .lineSpacing(4)
                         .frame(height: 72)
-                    
                 }.padding(.leading , 25)
-                    
-                
-               
             }
         }
 }
-
-
-
-
-
-
 #Preview {
     OnboardingBaseView(headerText: "Connect with Friends \nand Family", bodyText: "Connecting with Family and Friends \nprovides a sense of belonging and\nsecurity ", image:Image(.ONBOARDING_1))
 }

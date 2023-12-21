@@ -10,10 +10,8 @@ import SwiftUI
 struct AuthentecationVerifyView: View {
     @StateObject var vm = AuthentecationVerifyViewModel()
     @Environment(\.dismiss) var dismiss
-    
     @State  var pin: String = ""
     let pinLength = 6 // Define the length of the PIN
-  
     var body: some View {
         NavigationStack {
             ZStack {
@@ -48,11 +46,6 @@ struct AuthentecationVerifyView: View {
                     }
                     PINView
                     Spacer()
-                   
-                    
-        
-                   
-                   
                     if vm.isLoading {
                         ProgressView()
                             .tint(Color.white)
@@ -79,7 +72,7 @@ struct AuthentecationVerifyView: View {
                    
                 }.padding()
               
-            }.navigationDestination(isPresented: .constant(false), destination: {
+            }.navigationDestination(isPresented: $vm.showHome, destination: {
                 HomeTabView()
             })
             .navigationDestination(isPresented: $vm.showCreateAccount, destination: {
@@ -87,9 +80,7 @@ struct AuthentecationVerifyView: View {
             })
             .toolbar(.hidden)
         }
-      
     }
-    
     var PINView : some View {
         VStack {
             HStack(spacing: 10) {
@@ -138,53 +129,6 @@ struct AuthentecationVerifyView: View {
     AuthentecationVerifyView()
    
 }
-
-                
-                
-         
-                //                    HStack{
-                //                        TextField("Code ", text: $vm.verificationCode)
-                //                            .keyboardType(.numberPad)
-                //                            .padding()
-                //                            .background(Color("bcolor"))
-                //                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                //                            .focused($isTextFieldFoucsed)
-                //                            .overlay {
-                //                                RoundedRectangle(cornerRadius: 10)
-                //                                    .stroke(vm.verificationCodeError ? Color.red : Color.clear , lineWidth : 1.5)
-                //                            }
-                //                    }
-                //                    if vm.isLoading {
-                //                        ProgressView()
-                //                            .tint(Color.white)
-                //                            .frame(width: UIScreen.main.bounds.width - 30, height: 50)
-                //                            .background(Color("middleColor"))
-                //                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                //                            .disabled(true)
-                //                    }else { Button(action: {
-                //                        vm.VerfiyOTP()
-                //                        isTextFieldFoucsed = false
-                //                    }, label: {
-                //                        Text("Verify")
-                //                            .frame(width: UIScreen.main.bounds.width - 30,height: 50)
-                //                            .background(Color("middleColor"))
-                //                            .foregroundStyle(Color.white)
-                //                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                //                    })
-                //                    }
-                //                }
-                //                .sheet(isPresented: $vm.showCreateAccount, content: {
-                //                    CreateAccountView().presentationDetents([ .large , .fraction(0.8)]).cornerRadius(30, corners: [.topLeft ,.topRight])
-                //                })
-                //                .padding()
-                //                .navigationBarBackButtonHidden()
-                //            }.navigationDestination(isPresented:$vm.showHome) {
-                //                HomeTabView()
-                //            }
-         
-    
-    
-
 
 
 

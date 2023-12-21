@@ -8,43 +8,31 @@
 import Foundation
 import Firebase
 
-class HomeViewModel : ObservableObject {
-    @Published var allUserList = [UserModel]()
+class ChatViewModel : ObservableObject {
     @Published var friendList = [CombinedUserModel]()
-    @Published var searchText : String = ""
     @Published var isLoading : Bool = true
+    @Published var selectedFriend : CombinedUserModel?
+    
 
     init(){
-        getAllUsers()
+
         getFriendsList()
-        setupChatroomListener()
-    }
-//    check if user searching
-    func isSearching()  -> Bool {
-        if searchText.isEmpty {
-            return false
-        }else {
-            return true
-        }
+   setupChatroomListener()
+              
     }
 
-//    filter data based on user search (phone , name)
-    var filteredFriends: [UserModel] {
-        guard !searchText.isEmpty else { return allUserList }
-        return allUserList.filter { friend in
-            return friend.phone.localizedCaseInsensitiveContains(searchText) ||
-                   friend.name.localizedCaseInsensitiveContains(searchText)
-        }
-    }
 //    get all users with chat to view at home
     func getFriendsList() {
         FirestoreManager.shared.getCombinedUserModel { returnedCombinedUsers in
-            let sortedCombinedUsers = returnedCombinedUsers.sorted { $0.userHomeModel.lastMessageTimestamp > $1.userHomeModel.lastMessageTimestamp }
+            let sortedCombinedUsers = returnedCombinedUsers.sorted { $0.userHomeModel.lastMessageTimestamp > $1.userHomeModel.lastMessageTimestamp
+            }
+            
             self.friendList = sortedCombinedUsers
             self.isLoading = sortedCombinedUsers.isEmpty
+        
            }
        }
-    
+ 
     func setupChatroomListener() {
             let chatroomsCollectionRef = Firestore.firestore().collection("chatrooms")
             // Add a snapshot listener to the chatrooms collection
@@ -60,15 +48,4 @@ class HomeViewModel : ObservableObject {
                 }
             }
         }
-  
-// i wanted to perform a better search experience but it should make the search from firebase
-    func getAllUsers() {
-        FirestoreManager.shared.getData { Allusers in
-            if Allusers != nil {
-                DispatchQueue.main.async {
-                    self.allUserList = Allusers!
-                }
-            }
-        }
-    }
 }

@@ -15,10 +15,12 @@ struct RowView: View {
             VStack(alignment: .leading) {
                 HStack{
                     Text(UserView.userModel.name)
-                        .font(.title2)
+                        .font(.custom("Poppins", size: 18))
+                        .fontWeight(.semibold)
                     Spacer()
                     Text(UserView.userHomeModel.lastMessageTimestamp.formattedTime())
-                        .font(.caption)
+                        .font(.custom("Poppins", size: 12))
+                        .fontWeight(.medium)
                         .foregroundStyle(.gray)
                     
                 }

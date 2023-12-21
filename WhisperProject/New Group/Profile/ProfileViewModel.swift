@@ -6,20 +6,36 @@
 //
 
 import Foundation
+import SwiftUI
 
 class ProfileViewModel: ObservableObject {
-    @Published var currentUser: UserModel?
     @Published var showEditProfile : Bool = false
-    init() {
-        currentUser = UserModel(id: "", name: "shera", phone: "01092772040", profilePhoto: "https://firebasestorage.googleapis.com:443/v0/b/chatapp-9879e.appspot.com/o/xQp3ndOUsQTuCyyX3iQQWHO82Cw1?alt=media&token=718bf964-1dc3-4145-928f-a0ffbc15c383", status: "احا ")
-//        getCurrentUserInfo()
+    @Published var shouldRefreshData : Bool = false
+    @Published var updatedFullName: String = ""
+    @Published var updatedUserName: String = ""
+    @Published var updatedStatus: String = ""
+    @Published var photoURL : URL?
+    @Published var currentUserData: UserModel? {
+        didSet {
+            // Set initial values when currentUserData is set
+            if let currentUserData = currentUserData {
+                DispatchQueue.main.async {
+                    self.updatedFullName = currentUserData.name
+                    self.updatedUserName = currentUserData.username
+                    self.updatedStatus = currentUserData.status
+                }
+            }
+        }
     }
-    
+    init(){
+        getCurrentUserInfo()
+    }
     func getCurrentUserInfo() {
         FirestoreManager.shared.getCurrentUserData { returnedUser in
             if let returnedUser = returnedUser {
                 DispatchQueue.main.async {
-                    self.currentUser = returnedUser
+                    self.currentUserData = returnedUser
+                    self.photoURL = URL(string: returnedUser.profilePhoto)
                 }
             }
         }

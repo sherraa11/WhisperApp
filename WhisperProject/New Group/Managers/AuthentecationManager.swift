@@ -11,10 +11,8 @@ import Firebase
 final class AuthentecationManager {
     var returnedverificationID: String = ""
     static let shared = AuthentecationManager()
-    let HomeVM = HomeViewModel()
     
     private init() { }
-    
     // Updated SignUp method with completion handler
     func SignUp(phoneNumber: String, cityCode: String, completion: @escaping (Error?) -> Void) {
         Auth.auth().settings?.isAppVerificationDisabledForTesting = true
@@ -30,8 +28,6 @@ final class AuthentecationManager {
                 completion(nil)
             }
         }
-        // Update all data needed for search without listener (assuming it's a synchronous operation)
-        HomeVM.getAllUsers()
     }
 //    it takes the OTP from signUp function and check if it ture or not
     func Verification(typedVerificationCode: String, completion: @escaping (Bool) -> Void) {

@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct MessageField: View {
-    @ObservedObject var vm = ChatViewModel()
+    @ObservedObject var vm = MessagingViewModel()
     @State var user : String
     @State var chatid : String
     @State var messageText: String = "" // Store the message locally
@@ -21,21 +21,28 @@ struct MessageField: View {
                 .frame(height: 52)
                 .disableAutocorrection(true)
             Button {
-                vm.sendMessage(Message: messageText, chatId: chatid, senderId: user)
-                messageText = ""
+                if !messageText.isEmpty{
+                    vm.sendMessage(Message: messageText, chatId: chatid, senderId: user)
+                    messageText = ""
+                }
             } label: {
                 Image(systemName: "paperplane.fill")
                     .foregroundColor(.white)
                     .padding(10)
-                    .background(Color("middleColor"))
+                    .background(.terqwaz)
                     .cornerRadius(50)
             }
         }
         .padding(.horizontal)
         .padding(.vertical, 10)
-        .background(Color("bcolor"))
-        .cornerRadius(50)
+        .background(Color(.textFieldbackground))
+        .cornerRadius(20)
+        .overlay(content: {
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(.terqwaz ,lineWidth: 1 )
+        })
         .padding()
+       
     }
 }
 

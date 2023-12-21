@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MessageBubble: View {
-    @ObservedObject var vm = ChatViewModel()
+    @ObservedObject var vm = MessagingViewModel()
     let currentUser = FirestoreManager.shared.getCurrentUserID()
     var message: MessageModel
     
@@ -16,9 +16,12 @@ struct MessageBubble: View {
         VStack(alignment: message.senderId != currentUser ? .leading : .trailing) {
             HStack {
                 Text(message.message)
+                    .font(.custom("Poppins", size: 16))
+                    .fontWeight(.medium)
                     .padding()
-                    .background(message.senderId != currentUser ? Color("bcolor") : Color("middleColor"))
-                    .clipShape(.rect(cornerRadius: 25))
+                    .background(message.senderId != currentUser ? Color(.textFieldbackground) : Color(.terqwaz))
+                    .foregroundStyle(message.senderId != currentUser ? .black : .white)
+                    .cornerRadius(25, corners:message.senderId != currentUser ? [.bottomRight ,.topRight] : [.topLeft, .bottomLeft])
             }
             .frame(maxWidth: 300, alignment: message.senderId != currentUser ? .leading : .trailing)
             .onTapGesture {
@@ -38,3 +41,6 @@ struct MessageBubble: View {
     }
 }
 
+#Preview {
+    MessageBubble(message: MessageModel(id: "", message: "hello", senderId: "FirestoreManager.shared.getCurrentUserID()", timestamp: .now))
+}

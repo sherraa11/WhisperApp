@@ -17,6 +17,7 @@ class CreateAccountViewModel : ObservableObject {
     @Published var showUserNameError : Bool = false
     @Published var showStatusError : Bool = false
     @Published var showImageError : Bool = false
+    @Published var isLoading : Bool = false
     @Published var showHome : Bool = false
     @Published private(set) var selectedImage : UIImage? = nil
     @Published var imageSelection : PhotosPickerItem? = nil {
@@ -61,9 +62,12 @@ class CreateAccountViewModel : ObservableObject {
             showStatusError = false
         }
         if !showImageError && !showNameError && !showStatusError {
-            
-            FirestoreManager.shared.createUser(name: name, status: status)
-            StorageManager.shared.uploadPhoto(selectedImage: selectedImage!)
+            isLoading = true
+            FirestoreManager.shared.createUser(name: name, status: status, username: username)
+            StorageManager.shared.uploadPhoto(selectedImage: selectedImage!){ x in
+               
+            }
+            isLoading = false
             showHome.toggle()
         }
     }

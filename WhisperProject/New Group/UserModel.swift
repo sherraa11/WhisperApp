@@ -12,4 +12,5 @@ struct UserModel : Identifiable , Hashable {
     let phone : String
     let profilePhoto : String
     let status : String
+    let username: String
 }

@@ -14,9 +14,11 @@ struct RowSearchView: View {
             KingfisherAsyncImage(url: URL(string:user.profilePhoto)!)
             VStack(alignment: .leading) {
                 Text(user.name)
-                    .font(.title2)
+                    .font(.custom("Poppins", size: 18))
+                    .fontWeight(.semibold)
                 Text(user.phone.dropFirst(2))
-                    .font(.caption)
+                    .font(.custom("Poppins", size: 12))
+                    .fontWeight(.medium)
                     .foregroundColor(.gray)
             }
             .frame(maxWidth: .infinity, alignment: .leading)

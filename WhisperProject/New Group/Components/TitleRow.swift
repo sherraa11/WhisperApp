@@ -13,7 +13,7 @@ struct TitleRow: View {
     var body: some View {
         HStack(spacing: 20) {
             
-            Image(systemName: "chevron.left")
+            Image(systemName: "chevron.down")
                 .font(.system(size: 20))
                 .onTapGesture {
                     dismiss.callAsFunction()
@@ -21,20 +21,17 @@ struct TitleRow: View {
             KingfisherAsyncImage(url: URL(string: user.profilePhoto)!)
             VStack(alignment: .leading) {
                 Text(user.name)
-                    .font(.title)
+                    .font(.custom("Poppins", size: 18))
+                    .fontWeight(.semibold)
                     .lineLimit(1)
 
-                Text(user.status)
-                    .font(.caption)
-                    .foregroundColor(Color("bcolor"))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Image(systemName: "info.circle")
-                .padding(10)
-                .background(.white)
-                .cornerRadius(50)
-        }
-        .padding()
+            }
+        .padding(.horizontal)
+        .padding(.top)
     }
+}
+#Preview {
+    TitleRow(user: UserModel(id: " ", name: "heu", phone: "ff", profilePhoto: " ", status: "ff", username: "@djf"))
 }
