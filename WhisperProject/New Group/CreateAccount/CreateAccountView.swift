@@ -105,7 +105,7 @@ struct CreateAccountView: View {
                     Spacer()
                     
                     Button {
-                        print("Pressed")
+                    
                         vm.CreateUser()
                     } label: {
                         Text("Create")

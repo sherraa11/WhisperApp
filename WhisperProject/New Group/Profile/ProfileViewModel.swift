@@ -10,10 +10,13 @@ import SwiftUI
 
 class ProfileViewModel: ObservableObject {
     @Published var showEditProfile : Bool = false
+    @Published var showSettings : Bool = false
     @Published var shouldRefreshData : Bool = false
+    @Published var showNoPosts : Bool = false
     @Published var updatedFullName: String = ""
     @Published var updatedUserName: String = ""
     @Published var updatedStatus: String = ""
+    @Published var profilePhotos: [String] = []
     @Published var photoURL : URL?
     @Published var currentUserData: UserModel? {
         didSet {
@@ -29,6 +32,7 @@ class ProfileViewModel: ObservableObject {
     }
     init(){
         getCurrentUserInfo()
+        getPostPhotos()
     }
     func getCurrentUserInfo() {
         FirestoreManager.shared.getCurrentUserData { returnedUser in
@@ -36,6 +40,18 @@ class ProfileViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.currentUserData = returnedUser
                     self.photoURL = URL(string: returnedUser.profilePhoto)
+                }
+            }
+        }
+    }
+    
+    func getPostPhotos(){
+        FirestoreManager.shared.getProfilePhotos(forUser: FirestoreManager.shared.getCurrentUserID()) { photos in
+            if let Photos = photos {
+                DispatchQueue.main.async {
+                    self.profilePhotos = Photos
+                    self.showNoPosts = Photos.isEmpty
+                    print(self.showNoPosts)
                 }
             }
         }

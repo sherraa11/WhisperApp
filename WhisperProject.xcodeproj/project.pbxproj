@@ -18,6 +18,7 @@
 		892283D82B08DE8700BADB27 /* RowSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892283D72B08DE8600BADB27 /* RowSearchView.swift */; };
 		892C34552B2CD6ED0018A62A /* MessageingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892C34542B2CD6ED0018A62A /* MessageingView.swift */; };
 		893324A02B1E14570068BF8C /* SwiftfulLoadingIndicators in Frameworks */ = {isa = PBXBuildFile; productRef = 8933249F2B1E14570068BF8C /* SwiftfulLoadingIndicators */; };
+		8946283A2B34872C008B5BB8 /* PostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894628392B34872B008B5BB8 /* PostsModel.swift */; };
 		8946B4C62B0BFA7E0099E4EC /* UserHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8946B4C52B0BFA7E0099E4EC /* UserHomeModel.swift */; };
 		8946FC052B20BF9F002F1C00 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8946FC042B20BF9F002F1C00 /* HomeTabView.swift */; };
 		8946FC082B20C179002F1C00 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8946FC072B20C179002F1C00 /* ProfileView.swift */; };
@@ -58,7 +59,10 @@
 		898C5F452B0660B10006C892 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898C5F442B0660B10006C892 /* Extensions.swift */; };
 		899382ED2B29054E00A41054 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899382EC2B29054E00A41054 /* HomeView.swift */; };
 		899456512B09F0CB00E9D5C5 /* MessagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899456502B09F0CB00E9D5C5 /* MessagingViewModel.swift */; };
+		89A02F052B36161800CB0762 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A02F042B36161700CB0762 /* SettingsView.swift */; };
 		89BB320A2B3090E2009CAB9D /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BB32092B3090E2009CAB9D /* EditProfileViewModel.swift */; };
+		89D070E42B35952B00890754 /* NotficationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D070E22B35952A00890754 /* NotficationManager.swift */; };
+		89D070E52B35952B00890754 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D070E32B35952B00890754 /* HapticManager.swift */; };
 		89DD50632B1C72AB003ED3F7 /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 89DD50622B1C72AB003ED3F7 /* Shimmer */; };
 		89EBB6AE2B29AFFA00728787 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EBB6AD2B29AFFA00728787 /* SearchView.swift */; };
 /* End PBXBuildFile section */
@@ -74,6 +78,7 @@
 		892283CF2B08A74D00BADB27 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		892283D72B08DE8600BADB27 /* RowSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowSearchView.swift; sourceTree = "<group>"; };
 		892C34542B2CD6ED0018A62A /* MessageingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageingView.swift; sourceTree = "<group>"; };
+		894628392B34872B008B5BB8 /* PostsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsModel.swift; sourceTree = "<group>"; };
 		8946B4C52B0BFA7E0099E4EC /* UserHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeModel.swift; sourceTree = "<group>"; };
 		8946FC042B20BF9F002F1C00 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
 		8946FC072B20C179002F1C00 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -108,7 +113,10 @@
 		898C5F442B0660B10006C892 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		899382EC2B29054E00A41054 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		899456502B09F0CB00E9D5C5 /* MessagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingViewModel.swift; sourceTree = "<group>"; };
+		89A02F042B36161700CB0762 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		89BB32092B3090E2009CAB9D /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		89D070E22B35952A00890754 /* NotficationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotficationManager.swift; sourceTree = "<group>"; };
+		89D070E32B35952B00890754 /* HapticManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		89EBB6AD2B29AFFA00728787 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -258,6 +266,8 @@
 			isa = PBXGroup;
 			children = (
 				898C5F442B0660B10006C892 /* Extensions.swift */,
+				89D070E32B35952B00890754 /* HapticManager.swift */,
+				89D070E22B35952A00890754 /* NotficationManager.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -305,6 +315,7 @@
 		898C5EED2B0602440006C892 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				89A02F032B3615F600CB0762 /* Settings */,
 				895B2BAE2B330914006A9CC1 /* Managers */,
 				8946FC032B20BF8C002F1C00 /* TabView */,
 				892283D62B08DE6B00BADB27 /* Components */,
@@ -329,6 +340,7 @@
 				892283CF2B08A74D00BADB27 /* MessageModel.swift */,
 				8946B4C52B0BFA7E0099E4EC /* UserHomeModel.swift */,
 				8916399B2B2669C300A5F531 /* CountryModel.swift */,
+				894628392B34872B008B5BB8 /* PostsModel.swift */,
 			);
 			name = Models;
 			path = "New Group";
@@ -360,6 +372,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		89A02F032B3615F600CB0762 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				89A02F042B36161700CB0762 /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		89EBB6AC2B29AFCF00728787 /* Search */ = {
@@ -463,9 +483,11 @@
 			files = (
 				890CE9DE2B0927B800ECF0F6 /* Cache.swift in Sources */,
 				890CE9E42B092FC300ECF0F6 /* MessageBubble.swift in Sources */,
+				89D070E52B35952B00890754 /* HapticManager.swift in Sources */,
 				898C5F002B0638040006C892 /* AuthentecationViewModel.swift in Sources */,
 				897F65AA2B1CD05400F2AAE5 /* RowView.swift in Sources */,
 				890CE9E82B09312600ECF0F6 /* ChatView.swift in Sources */,
+				8946283A2B34872C008B5BB8 /* PostsModel.swift in Sources */,
 				898189A62B07D4D300368979 /* ChatViewModel.swift in Sources */,
 				8946FC052B20BF9F002F1C00 /* HomeTabView.swift in Sources */,
 				895B2BAD2B3308B3006A9CC1 /* CreatePostView.swift in Sources */,
@@ -489,6 +511,7 @@
 				898C5EFE2B0637F60006C892 /* AuthentecationVerifyView.swift in Sources */,
 				898C5EF12B0618010006C892 /* OnBoardingFlow.swift in Sources */,
 				892283D02B08A74D00BADB27 /* MessageModel.swift in Sources */,
+				89A02F052B36161800CB0762 /* SettingsView.swift in Sources */,
 				89BB320A2B3090E2009CAB9D /* EditProfileViewModel.swift in Sources */,
 				892C34552B2CD6ED0018A62A /* MessageingView.swift in Sources */,
 				898C5EE22B06020A0006C892 /* RootView.swift in Sources */,
@@ -499,6 +522,7 @@
 				895B2BAB2B3306BE006A9CC1 /* SearchViewModel.swift in Sources */,
 				89EBB6AE2B29AFFA00728787 /* SearchView.swift in Sources */,
 				894C599A2B21200500AF28B6 /* ProfileViewModel.swift in Sources */,
+				89D070E42B35952B00890754 /* NotficationManager.swift in Sources */,
 				898C5F452B0660B10006C892 /* Extensions.swift in Sources */,
 				8946FC082B20C179002F1C00 /* ProfileView.swift in Sources */,
 				898C5EE02B06020A0006C892 /* WhisperProjectApp.swift in Sources */,
@@ -639,7 +663,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhisperProject/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Whisper;
+				INFOPLIST_KEY_CFBundleDisplayName = Momento;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -671,7 +696,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhisperProject/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Whisper;
+				INFOPLIST_KEY_CFBundleDisplayName = Momento;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

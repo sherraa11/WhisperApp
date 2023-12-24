@@ -12,12 +12,13 @@ class ChatViewModel : ObservableObject {
     @Published var friendList = [CombinedUserModel]()
     @Published var isLoading : Bool = true
     @Published var selectedFriend : CombinedUserModel?
-    
+
+ 
 
     init(){
 
         getFriendsList()
-   setupChatroomListener()
+        setupChatroomListener()
               
     }
 
@@ -45,6 +46,8 @@ class ChatViewModel : ObservableObject {
                 if !snapshot.documentChanges.isEmpty {
                     // When changes occur, update the friendList
                     self?.getFriendsList()
+                    NotficationManager.shared.scheduleNotification(title: "Momento", body: "", subtitle: "You have a new message!")
+                    
                 }
             }
         }

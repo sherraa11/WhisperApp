@@ -56,5 +56,35 @@ class StorageManager {
             }
         }
     }
+    
+    func uploadPost(selectedImage: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
+        let storage = Storage.storage().reference()
+        guard let imageData = selectedImage.jpegData(compressionQuality: 0.5) else {
+            completion(.failure(NSError(domain: "com.yourapp.error", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert image to data"])))
+            return
+        }
+
+        let path = UUID().uuidString
+        let file = storage.child(path)
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpeg"
+
+        file.putData(imageData, metadata: metaData) { metadata, error in
+            if let uploadError = error {
+                completion(.failure(uploadError))
+                print("Error uploading image: \(uploadError.localizedDescription)")
+            } else {
+                file.downloadURL { url, downloadError in
+                    if let downloadError = downloadError {
+                        completion(.failure(downloadError))
+                        print("Error getting download URL: \(downloadError.localizedDescription)")
+                    } else if let urlString = url?.absoluteString {
+                        completion(.success(urlString))
+                    }
+                }
+            }
+        }
+    }
+
 
 }

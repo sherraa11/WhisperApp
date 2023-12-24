@@ -10,6 +10,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 
+
 class MessagesManager: ObservableObject {
     static let shared = MessagesManager()
     @Published private(set) var messages: [MessageModel] = [MessageModel(id: " ", message: "hey", senderId: " ", timestamp: .now)]
@@ -20,6 +21,7 @@ class MessagesManager: ObservableObject {
     init() {}
     // Read message from Firestore in real-time with the addSnapShotListener
     func getMessages(chatId : String) {
+        
         db.collection("chatrooms").document(chatId).collection("chats").addSnapshotListener { querySnapshot, error in
             guard let documents = querySnapshot?.documents else {
                 print("Error fetching documents: \(String(describing: error))")
@@ -29,22 +31,26 @@ class MessagesManager: ObservableObject {
             self.messages = documents.compactMap { document -> MessageModel? in
                 do {
                     // Converting each document into the Message model
+                  
                     return try document.data(as: MessageModel.self)
                 } catch {
                     print("Error decoding document into Message: \(error)")
                     return nil
                 }
+           
             }
             // Sorting the messages by sent date
             self.messages.sort { $0.timestamp < $1.timestamp }
             if let id = self.messages.last?.id {
                 self.lastMessageId = id
+                NotficationManager.shared.scheduleNotification(title: "Momento", body: "", subtitle: "You have a new message!")
             }
             //save last Message details
             if let lastMessage = self.messages.last {
                 self.db.collection("chatrooms").document(chatId).setData(["lastMessageTimestamp" : lastMessage.timestamp , "lastMessageSenderId" : lastMessage.senderId ,"lastMessage" : lastMessage.message], merge: true)
             }
         }
+    
     }
     // Add a message in Firestore
     func sendMessage(text: String, chatId: String, senderId: String) {

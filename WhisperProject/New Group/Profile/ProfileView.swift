@@ -7,7 +7,6 @@
 import SwiftUI
 import Kingfisher
 import SwiftfulLoadingIndicators
-import Shimmer
 
 struct ProfileView: View {
     @ObservedObject var vm = ProfileViewModel()
@@ -34,12 +33,6 @@ struct ProfileView: View {
                             .frame(width: 67 , height: 67)
                             .clipShape(Circle())
                         
-                    }else{
-                        Circle()
-                            .frame(width: 67 , height: 67)
-                            .foregroundStyle(.white)
-                            .redacted(reason: .placeholder)
-                            .shimmering()
                     }
                     VStack{HStack{
                         Text(vm.updatedFullName)
@@ -56,7 +49,7 @@ struct ProfileView: View {
                     }
                     Spacer()
                     Button {
-                        
+                        vm.showSettings.toggle()
                     } label: {
                         Image(systemName: "gear")
                             .font(.system(size: 20))
@@ -89,7 +82,7 @@ struct ProfileView: View {
                 
                 HStack{Spacer()
                     VStack{
-                        Text("87")
+                        Text(String(vm.profilePhotos.count))
                             .font(.custom("Poppins", size: 14))
                             .fontWeight(.semibold)
                         Text("Posts")
@@ -129,22 +122,35 @@ struct ProfileView: View {
                         .fontWeight(.regular)
                     Spacer()
                 }.padding(.top,20)
-                    .padding(.horizontal, 32)
-                ScrollView{
-                    VStack(spacing: 8) {
-                        ForEach(0..<10) { index in // Change the range or use your image data here
-                            HStack(spacing: 10) {
-                                ForEach(0..<3) { innerIndex in
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(.gray) // Change color as per your image
-                                        .frame(width: 99, height: 99) // Adjust image frame size
-                                    // Replace this with your image loading logic
-                                        .overlay(Text("Image \(innerIndex + (index * 3) + 1)")) // Placeholder text
+                .padding(.horizontal, 32)
+                if !vm.showNoPosts{
+                    ScrollView {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3 )) {
+                            ForEach(vm.profilePhotos, id: \.self) { photo in
+                                if photo != ""{
+                                    KFImage(URL(string: photo))
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: UIScreen.main.bounds.width / 3 - 5 , height: UIScreen.main.bounds.width / 3 - 5)
+                                        .cornerRadius(8) // Apply corner radius if needed
                                 }
                             }
                         }
+                        .padding(5)
                     }
-                }.scrollIndicators(.hidden)
+                    .scrollIndicators(.hidden)
+                }else{
+                    VStack{
+                        Image(systemName:"camera.circle")
+                            .font(.system(size: 50))
+                            .padding()
+                        
+                        Text("No posts yet")
+                            .font(.custom("Poppins", size: 20))
+                            .fontWeight(.semibold)
+                        Spacer()
+                    }
+                }
             }.navigationBarTitleDisplayMode(.inline)
                 .navigationTitle("My Profile")
                 .navigationBarBackButtonHidden()
@@ -159,6 +165,9 @@ struct ProfileView: View {
                 }, content: {
                     EditProfileView()
                 })
+                .sheet(isPresented: $vm.showSettings) {
+                    SettingsView().presentationDetents([.fraction(0.2)])
+                }
         }
     }
 }

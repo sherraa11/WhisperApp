@@ -9,13 +9,14 @@ import SwiftUI
 
 struct RootView: View {
     @AppStorage("on_boarding") var onBoarding : Bool = false
-    @State var showHome = UserDefaults.standard.value(forKey: "showHome") 
+    @AppStorage("showHome") var showHome : Bool = false
+    
     var body: some View {
             if !onBoarding{
                 OnBoardingFlow()
-            }else if (showHome == nil) {
+            }else if !showHome  {
                     AuthentecationView()
-            }else if (showHome != nil) {
+            }else if showHome  {
                 HomeTabView()
             }
     }

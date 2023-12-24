@@ -43,21 +43,29 @@ class CreateAccountViewModel : ObservableObject {
     func CreateUser() {
         if username.isEmpty {
             showUserNameError = true
+            HapticManager.shared.notification(type: .error)
+            HapticManager.shared.impact(style: .heavy)
         } else {
             showUserNameError = false
         }
         if selectedImage == nil {
+            HapticManager.shared.notification(type: .error)
+            HapticManager.shared.impact(style: .heavy)
             showImageError = true
         } else {
             showImageError = false
         }
         if name.isEmpty {
             showNameError = true
+            HapticManager.shared.notification(type: .error)
+            HapticManager.shared.impact(style: .heavy)
         } else {
             showNameError = false
         }
         if status.isEmpty {
             showStatusError = true
+            HapticManager.shared.notification(type: .error)
+            HapticManager.shared.impact(style: .heavy)
         } else {
             showStatusError = false
         }

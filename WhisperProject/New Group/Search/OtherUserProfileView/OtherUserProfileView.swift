@@ -8,7 +8,29 @@
 import SwiftUI
 import Kingfisher
 
+
+class OtherUserProfileViewModel : ObservableObject {
+    
+    @Published var profilePhotos: [String] = []
+    @Published var showNoPosts: Bool = false
+    
+
+    
+    func getPostPhotos(id : String){
+        FirestoreManager.shared.getProfilePhotos(forUser: id) { photos in
+            if let Photos = photos {
+                DispatchQueue.main.async {
+                    self.profilePhotos.removeAll()
+                    self.profilePhotos = Photos
+                    self.showNoPosts = Photos.isEmpty
+                }
+            }
+        }
+    }
+}
+
 struct OtherUserProfileView: View {
+    @ObservedObject var vm = OtherUserProfileViewModel()
     @Environment(\.dismiss) var dismiss
     @State var user : UserModel
     @State var showMessaging: Bool = false
@@ -28,6 +50,7 @@ struct OtherUserProfileView: View {
                                 }
                         })
                         .resizable()
+                        .aspectRatio(contentMode: .fill)
                         .frame(width: 67 , height: 67)
                         .clipShape(Circle())
                     VStack{
@@ -85,7 +108,7 @@ struct OtherUserProfileView: View {
                 }.padding(.horizontal ,28 )
                 HStack{Spacer()
                     VStack{
-                        Text("87")
+                        Text(String(vm.profilePhotos.count))
                             .font(.custom("Poppins", size: 14))
                             .fontWeight(.semibold)
                         Text("Posts")
@@ -126,28 +149,48 @@ struct OtherUserProfileView: View {
                     Spacer()
                 }.padding(.top,20)
                     .padding(.horizontal, 32)
-                ScrollView{
-                    VStack(spacing: 8) {
-                        ForEach(0..<10) { index in // Change the range or use your image data here
-                            HStack(spacing: 10) {
-                                ForEach(0..<3) { innerIndex in
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(.gray) // Change color as per your image
-                                        .frame(width: 99, height: 99) // Adjust image frame size
-                                    // Replace this with your image loading logic
-                                        .overlay(Text("Image \(innerIndex + (index * 3) + 1)")) // Placeholder text
+                
+                if !vm.showNoPosts{
+                    ScrollView {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3 )) {
+                            ForEach(vm.profilePhotos, id: \.self) { photo in
+                                if photo != ""{
+                                    KFImage(URL(string: photo))
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: UIScreen.main.bounds.width / 3 - 5 , height: UIScreen.main.bounds.width / 3 - 5)
+                                        .cornerRadius(8) // Apply corner radius if needed
                                 }
                             }
                         }
+                        .padding(5)
                     }
-                }.scrollIndicators(.hidden)
+                    .scrollIndicators(.hidden)
+                }else{
+                    VStack{
+                        Image(systemName:"camera.circle")
+                            .font(.system(size: 50))
+                            .foregroundStyle(.black.opacity(0.9))
+                            .padding()
+                            .padding(.top, 20)
+                        
+                        Text("No posts yet")
+                            .font(.custom("Poppins", size: 20))
+                            .fontWeight(.semibold)
+                        Spacer()
+                    }
+
+                }
             }.fullScreenCover(isPresented: $showMessaging, content: {
                 MessageingView(user: user)
             })
             .navigationBarTitleDisplayMode(.inline)
                 .navigationTitle("Profile")
                 .accentColor(.black)
-        }
+        }.tint(.black)
+            .onAppear{
+                vm.getPostPhotos(id: user.id)
+            }
     }
 }
 

@@ -42,4 +42,15 @@ final class AuthentecationManager {
             completion(true)
         }
     }
+    
+    
+    func logout(completion: @escaping (Error?) -> Void) {
+        do {
+            try Auth.auth().signOut()
+            completion(nil) // Successful logout
+        } catch let error as NSError {
+            print("Error signing out: \(error.localizedDescription)")
+            completion(error)
+        }
+    }
 }

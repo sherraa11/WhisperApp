@@ -35,6 +35,7 @@ struct EditProfileView: View {
                                             Circle()
                                                 .stroke(.terqwaz, lineWidth: 1)
                                             ProgressView()
+                                                .tint(.terqwaz)
                                         }
                                 }
                                 .resizable()

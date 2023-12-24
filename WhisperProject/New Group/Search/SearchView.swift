@@ -42,9 +42,10 @@ struct SearchView: View {
                 }
                 Spacer()
             }
-            .navigationTitle(" ")
+            .navigationTitle("Search")
             .toolbar(.visible)
             .navigationBarTitleDisplayMode(.inline)
+         
         }
     }
 }

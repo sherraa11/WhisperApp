@@ -241,6 +241,97 @@ final class FirestoreManager {
         }
     }
 
+    
+    func createPost(caption: String, user: UserModel, id : String,postPhoto : String , completion: @escaping (Bool) -> Void) {
+        db.collection("posts").document(id).setData([
+            "caption": caption,
+            "id": id,
+            "postPhoto" : postPhoto,
+            "timestamp": Date(),
+            "userWhoCreateThePost": ["name" : user.name , "status" : user.status ,"id" : getCurrentUserID(), "phone" : getCurrentUserPhoneNumber(), "username": user.username , "profilePhoto": user.profilePhoto]
+        ]) { error in
+            if let error = error {
+                print("Error creating post document: \(error.localizedDescription)")
+                completion(false) // Notify failure via completion handler
+            } else {
+                completion(true) // Notify success via completion handler
+            }
+        }
+    }
+
+    func getPostsData(completion: @escaping ([PostsModel]?) -> Void) {
+        db.collection("posts").getDocuments { snapshot, error in
+            if let error = error {
+                print("Error fetching posts: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+                completion(nil)
+                return
+            }
+            
+            var postsList = [PostsModel]()
+            
+            for document in snapshot.documents {
+                let id = document.documentID
+                let caption = document["caption"] as? String ?? "caption"
+                let postPhoto = document["postPhoto"] as? String ?? "postPhoto"
+                let timestamp = document["timestamp"] as? Timestamp ?? Timestamp()
+                let user = document["userWhoCreateThePost"] as? [String: Any] ?? [:]
+                
+                let userID = user["id"] as? String ?? ""
+                let name = user["name"] as? String ?? "name"
+                let phone = user["phone"] as? String ?? "phone"
+                let profilePhoto = user["profilePhoto"] as? String ?? "profilePhoto"
+                let status = user["status"] as? String ?? "status"
+                let username = user["username"] as? String ?? "username"
+                
+                let userModel = UserModel(id: userID, name: name, phone: phone, profilePhoto: profilePhoto, status: status, username: username)
+                
+                let post = PostsModel(id: id, caption: caption, postPhoto: postPhoto, timestamp: timestamp.dateValue(), userWhoCreateThePost: userModel)
+                postsList.append(post)
+            }
+            
+            completion(postsList)
+        }
+    }
+    
+    func getProfilePhotos(forUser userId: String, completion: @escaping ([String]?) -> Void) {
+        db.collection("posts")
+            .whereField("userWhoCreateThePost.id", isEqualTo: userId)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error fetching posts: \(error.localizedDescription)")
+                    completion(nil)
+                    return
+                }
+
+                guard let snapshot = snapshot else {
+                    completion(nil)
+                    return
+                }
+
+                var photoTimestamps = [(String, Date)]()
+
+                // Retrieve documents and associate postPhoto with timestamp
+                for document in snapshot.documents {
+                    if let postPhoto = document["postPhoto"] as? String,
+                       let timestamp = document["timestamp"] as? Timestamp {
+                        photoTimestamps.append((postPhoto, timestamp.dateValue()))
+                    }
+                }
+
+                // Sort the array of tuples by timestamp in descending order
+                photoTimestamps.sort { $0.1 > $1.1 }
+
+                // Extract postPhotos from sorted tuples
+                let sortedPhotos = photoTimestamps.map { $0.0 }
+
+                completion(sortedPhotos)
+            }
+    }
 
 
 

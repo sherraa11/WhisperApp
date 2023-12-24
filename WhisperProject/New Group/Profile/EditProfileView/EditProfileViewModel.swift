@@ -72,6 +72,11 @@ class EditProfileViewModel: ObservableObject {
         self.showNameError = showNameError
         self.showUsernameError = showUsernameError
         self.showStatusError = showStatusError
+        if showUsernameError || showNameError || showStatusError {
+            HapticManager.shared.notification(type: .error)
+            HapticManager.shared.impact(style: .heavy)
+            return
+        }
         
         if !showUsernameError && !showNameError && !showStatusError {
             isLoading = true // Set loading state before Firestore update

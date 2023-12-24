@@ -29,6 +29,9 @@ final class AuthentecationVerifyViewModel : ObservableObject {
                 }
             }else {
                 self.verificationCodeError = true
+                HapticManager.shared.notification(type: .error)
+                HapticManager.shared.impact(style: .heavy)
+                
             }
             self.isLoading = false
         }
