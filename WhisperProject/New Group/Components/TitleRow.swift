@@ -9,11 +9,12 @@ import SwiftUI
 
 struct TitleRow: View {
     @State var user : UserModel
+    @State var arrow : String
     @Environment(\.dismiss) var dismiss
     var body: some View {
         HStack(spacing: 20) {
             
-            Image(systemName: "chevron.down")
+            Image(systemName: "chevron."+arrow)
                 .font(.system(size: 20))
                 .onTapGesture {
                     dismiss.callAsFunction()
@@ -32,6 +33,4 @@ struct TitleRow: View {
         .padding(.top)
     }
 }
-#Preview {
-    TitleRow(user: UserModel(id: " ", name: "heu", phone: "ff", profilePhoto: " ", status: "ff", username: "@djf"))
-}
+

@@ -7,33 +7,37 @@
 
 import SwiftUI
 import Kingfisher
-
-
-class OtherUserProfileViewModel : ObservableObject {
-    
-    @Published var profilePhotos: [String] = []
-    @Published var showNoPosts: Bool = false
-    
-
-    
-    func getPostPhotos(id : String){
-        FirestoreManager.shared.getProfilePhotos(forUser: id) { photos in
-            if let Photos = photos {
-                DispatchQueue.main.async {
-                    self.profilePhotos.removeAll()
-                    self.profilePhotos = Photos
-                    self.showNoPosts = Photos.isEmpty
-                }
-            }
-        }
-    }
-}
+//
+//
+//class OtherUserProfileViewModel : ObservableObject {
+//    
+//    @Published var profilePhotos = [String]()
+//    @Published var showNoPosts: Bool = true
+//    
+//
+//    
+//    func getPostPhotos(id : String){
+//        FirestoreManager.shared.getProfilePhotos(forUser: id) { photos in
+//            if let Photos = photos {
+//                DispatchQueue.main.async {
+//                    self.profilePhotos.removeAll()
+//                    self.profilePhotos = Photos
+//                    self.showNoPosts = Photos.isEmpty
+//                }
+//            }
+//        }
+//    }
+//}
 
 struct OtherUserProfileView: View {
-    @ObservedObject var vm = OtherUserProfileViewModel()
+//    @ObservedObject var vm = OtherUserProfileViewModel()
     @Environment(\.dismiss) var dismiss
     @State var user : UserModel
     @State var showMessaging: Bool = false
+    @State var showNoPosts: Bool = false
+    @State var profilePhotos = [String]()
+    @State var isLoading: Bool = false
+
     var body: some View {
         NavigationStack{
             VStack{
@@ -74,7 +78,7 @@ struct OtherUserProfileView: View {
                     .padding(.horizontal , 28)
                 HStack{
                     Text(user.status)
-                        .font(.custom("Poppins", size: 12))
+                        .font(.custom("Poppins", size: 14))
                         .fontWeight(.medium)
                         .padding(.top , 12)
                     Spacer()
@@ -108,7 +112,7 @@ struct OtherUserProfileView: View {
                 }.padding(.horizontal ,28 )
                 HStack{Spacer()
                     VStack{
-                        Text(String(vm.profilePhotos.count))
+                        Text(String(profilePhotos.count))
                             .font(.custom("Poppins", size: 14))
                             .fontWeight(.semibold)
                         Text("Posts")
@@ -150,10 +154,16 @@ struct OtherUserProfileView: View {
                 }.padding(.top,20)
                     .padding(.horizontal, 32)
                 
-                if !vm.showNoPosts{
+                if isLoading {
+                    ProgressView()
+                        .tint(.terqwaz)
+                        .padding(.top, 50)
+                        .font(.system(size: 25))
+                    Spacer()
+                }else if !showNoPosts{
                     ScrollView {
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3 )) {
-                            ForEach(vm.profilePhotos, id: \.self) { photo in
+                            ForEach(profilePhotos, id: \.self) { photo in
                                 if photo != ""{
                                     KFImage(URL(string: photo))
                                         .resizable()
@@ -182,14 +192,24 @@ struct OtherUserProfileView: View {
 
                 }
             }.fullScreenCover(isPresented: $showMessaging, content: {
-                MessageingView(user: user)
+                MessageingView(user: user , arrow : "down")
             })
             .navigationBarTitleDisplayMode(.inline)
                 .navigationTitle("Profile")
                 .accentColor(.black)
         }.tint(.black)
             .onAppear{
-                vm.getPostPhotos(id: user.id)
+                self.isLoading = true
+                FirestoreManager.shared.getProfilePhotos(forUser: user.id) { Photos in
+                    if let photos = Photos {
+                        DispatchQueue.main.async {
+                            self.profilePhotos.removeAll()
+                            self.profilePhotos = photos
+                            self.showNoPosts = photos.isEmpty
+                            self.isLoading = false
+                        }
+                    }
+                }
             }
     }
 }

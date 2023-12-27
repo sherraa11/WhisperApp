@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import Shimmer
 struct RootView: View {
     @AppStorage("on_boarding") var onBoarding : Bool = false
     @AppStorage("showHome") var showHome : Bool = false

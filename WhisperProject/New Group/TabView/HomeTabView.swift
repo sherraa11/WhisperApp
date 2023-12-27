@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HomeTabView: View {
     @AppStorage("counter") var counter : Int = 0
-    @State var selectedTab : Int = 2
+    @State var selectedTab : Int = 1
     var body: some View {
         TabView(selection:$selectedTab) {
             HomeView()

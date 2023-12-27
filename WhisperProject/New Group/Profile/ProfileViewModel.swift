@@ -51,7 +51,7 @@ class ProfileViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.profilePhotos = Photos
                     self.showNoPosts = Photos.isEmpty
-                    print(self.showNoPosts)
+                
                 }
             }
         }

@@ -48,13 +48,13 @@ struct AuthentecationView: View {
                                     .font(.custom("Poppins", size: 16))
                                     .fontWeight(.medium)
                                     .foregroundStyle(.black.opacity(0.5))
-                                    .keyboardType(.numberPad)
+                                    .keyboardType(.numbersAndPunctuation)
                                     .padding()
                                     .background(.white)
                                     .clipShape(RoundedRectangle(cornerRadius: 10))
                                     .focused($isTextFieldFoucsed)
                                     
-                            }.keyboardType(.numbersAndPunctuation)
+                            }
                             .frame(height: 50)
                                 .foregroundStyle(.black.opacity(0.5))
                     }.overlay {

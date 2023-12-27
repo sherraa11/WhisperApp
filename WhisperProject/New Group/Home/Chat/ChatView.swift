@@ -17,28 +17,32 @@ struct ChatView: View {
             VStack {
                 if vm.isLoading {
                     
-                    LoadingIndicator(animation: .threeBallsBouncing, color: .primary , size: .medium, speed: .normal)
+                    LoadingIndicator(animation: .fiveLines, color: .primary , size: .medium, speed: .normal)
+                    Text("Let's get chatting!\nSend a message and make your first conversation happen.")
+                        .font(.custom("Poppins", size: 18))
                         .listStyle(.plain)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 8)
+                    
+                    
                             .navigationTitle("Chats")
                             .navigationBarTitleDisplayMode(.inline)
+                    
                 } else {
                     List(vm.friendList) { friend in
-                        Button(action: {
-                            isShowingMessageView.toggle()
-                            vm.selectedFriend = friend // Optionally update based on click
-                        }) {
+                        ZStack{
                             RowView(UserView: friend)
+                            NavigationLink {
+                                MessageingView(user: friend.userModel, arrow: "left")
+                            } label: {
+                                
+                            }.opacity(0)
                         }
                     }.listStyle(.plain)
                         .navigationTitle("Chats")
                         .navigationBarTitleDisplayMode(.inline)
                 }
-            }.fullScreenCover(isPresented: $isShowingMessageView, content: {
-                if vm.selectedFriend != nil{
-                    MessageingView(user: vm.selectedFriend!.userModel)
-                        .transition(.move(edge: .leading))
-                }
-            })
+            }
         }
         .onAppear {
             vm.getFriendsList() // Trigger data fetching when the view appears

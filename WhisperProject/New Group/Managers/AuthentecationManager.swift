@@ -15,7 +15,7 @@ final class AuthentecationManager {
     private init() { }
     // Updated SignUp method with completion handler
     func SignUp(phoneNumber: String, cityCode: String, completion: @escaping (Error?) -> Void) {
-        Auth.auth().settings?.isAppVerificationDisabledForTesting = true
+        Auth.auth().settings?.isAppVerificationDisabledForTesting = false
         let completePhoneNumber = cityCode + phoneNumber
         PhoneAuthProvider.provider().verifyPhoneNumber(completePhoneNumber, uiDelegate: nil) { ID, error in
             if let error = error {

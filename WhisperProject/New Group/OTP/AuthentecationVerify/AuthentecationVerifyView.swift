@@ -11,6 +11,7 @@ struct AuthentecationVerifyView: View {
     @StateObject var vm = AuthentecationVerifyViewModel()
     @Environment(\.dismiss) var dismiss
     @State  var pin: String = ""
+    @FocusState  var focus: Bool
     let pinLength = 6 // Define the length of the PIN
     var body: some View {
         NavigationStack {
@@ -104,11 +105,14 @@ struct AuthentecationVerifyView: View {
                         )
                         .background(
                             TextEditor(text: $pin)
+                                .focused($focus)
                                 .foregroundColor(.clear)
                                 .background(Color.clear)
                                 .frame(width: 50, height: 50)
                                 .opacity(0.05)
                                 .textContentType(.oneTimeCode)
+                                .keyboardType(.numbersAndPunctuation)
+                              
                                 
                         )
                 }
@@ -120,6 +124,7 @@ struct AuthentecationVerifyView: View {
                 }
                 
             })
+            .onAppear{ focus = true}
             .padding(.horizontal)
             
         }

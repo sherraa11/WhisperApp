@@ -60,11 +60,11 @@ struct ProfileView: View {
                 HStack{
                     
                     Text(vm.updatedStatus)
-                        .font(.custom("Poppins", size: 12))
+                        .font(.custom("Poppins", size: 14))
                         .padding(.trailing , 50)
                         .fontWeight(.medium)
                         .padding(.horizontal, 30)
-                        .padding(.top , 12)
+                        .padding(.top , 14)
                     Spacer()
                 }
                 Button(action: {

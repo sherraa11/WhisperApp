@@ -37,7 +37,7 @@ class AuthentecationViewModel : ObservableObject {
                 return self.phoneNumber
             }
             AuthentecationManager.shared.SignUp(phoneNumber: truePhoneNumber() , cityCode: cityCode ) { error in
-                if let error {
+                if error != nil {
                     self.phoneNumberError = true
                     HapticManager.shared.notification(type: .error)
                     HapticManager.shared.impact(style: .heavy)

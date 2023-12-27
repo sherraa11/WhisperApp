@@ -13,7 +13,7 @@ struct SearchView: View {
     var body: some View {
         NavigationStack{
             VStack{ RoundedRectangle(cornerRadius: 10)
-                    .frame(width: 335, height: 34)
+                    .frame(width: 335, height: 40)
                     .foregroundStyle(.clear)
                     .overlay{
                         RoundedRectangle(cornerRadius: 10)
@@ -26,19 +26,57 @@ struct SearchView: View {
                             Spacer()
                         }
                         TextField("Type something ......",text: $vm.searchText)
-                            .font(.custom("Poppins", size: 10))
-                        
+                            .font(.custom("Poppins", size: 14))
+                            .frame(height: 40)
                             .fontWeight(.medium)
                             .padding(.leading , 25)
                     }
                 if vm.isSearching() {
-                    List(vm.filteredFriends) { friend in
-                        NavigationLink {
-                            OtherUserProfileView( user: friend)
-                        } label: {
-                            RowSearchView(user: friend)
-                        }
-                    }.listStyle(.plain)
+                    if !vm.filteredFriends.isEmpty{
+                        List(vm.filteredFriends) { friend in
+                            NavigationLink {
+                                OtherUserProfileView( user: friend)
+                            } label: {
+                                RowSearchView(user: friend)
+                            }
+                        }.listStyle(.plain)
+                    } else {
+                        Spacer()
+                        
+                        Image(systemName: "magnifyingglass")
+                            .font(.system(size: 40))
+                            .foregroundStyle(.gray)
+                        
+                        Text("No Results")
+                            .font(.system(size: 20))
+                            .fontWeight(.bold)
+                            .padding(.top, 8)
+                        
+                        Text("Check the spelling or try a new search.")
+                            .font(.custom("Poppins", size: 16))
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.gray)
+                        
+                        
+                        Spacer()
+                       
+                    }
+                }else {
+                    Spacer()
+                    
+                    Image(.people)
+                        .resizable()
+                        .frame(width: 150, height: 150)
+                  
+                    
+                    Text("Start your search and connect with someone new.")
+                        .font(.system(size: 20))
+//                        .fontWeight(.bold)
+                        .padding(.top, 16)
+                        .multilineTextAlignment(.center)
+                    
+
+                    Spacer()
                 }
                 Spacer()
             }

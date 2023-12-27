@@ -18,6 +18,7 @@
 		892283D82B08DE8700BADB27 /* RowSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892283D72B08DE8600BADB27 /* RowSearchView.swift */; };
 		892C34552B2CD6ED0018A62A /* MessageingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892C34542B2CD6ED0018A62A /* MessageingView.swift */; };
 		893324A02B1E14570068BF8C /* SwiftfulLoadingIndicators in Frameworks */ = {isa = PBXBuildFile; productRef = 8933249F2B1E14570068BF8C /* SwiftfulLoadingIndicators */; };
+		8944CB692B3A27B200272347 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8944CB682B3A27B200272347 /* HomeViewModel.swift */; };
 		8946283A2B34872C008B5BB8 /* PostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894628392B34872B008B5BB8 /* PostsModel.swift */; };
 		8946B4C62B0BFA7E0099E4EC /* UserHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8946B4C52B0BFA7E0099E4EC /* UserHomeModel.swift */; };
 		8946FC052B20BF9F002F1C00 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8946FC042B20BF9F002F1C00 /* HomeTabView.swift */; };
@@ -78,6 +79,7 @@
 		892283CF2B08A74D00BADB27 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		892283D72B08DE8600BADB27 /* RowSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowSearchView.swift; sourceTree = "<group>"; };
 		892C34542B2CD6ED0018A62A /* MessageingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageingView.swift; sourceTree = "<group>"; };
+		8944CB682B3A27B200272347 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		894628392B34872B008B5BB8 /* PostsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsModel.swift; sourceTree = "<group>"; };
 		8946B4C52B0BFA7E0099E4EC /* UserHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeModel.swift; sourceTree = "<group>"; };
 		8946FC042B20BF9F002F1C00 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				899382EC2B29054E00A41054 /* HomeView.swift */,
+				8944CB682B3A27B200272347 /* HomeViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -486,6 +489,7 @@
 				89D070E52B35952B00890754 /* HapticManager.swift in Sources */,
 				898C5F002B0638040006C892 /* AuthentecationViewModel.swift in Sources */,
 				897F65AA2B1CD05400F2AAE5 /* RowView.swift in Sources */,
+				8944CB692B3A27B200272347 /* HomeViewModel.swift in Sources */,
 				890CE9E82B09312600ECF0F6 /* ChatView.swift in Sources */,
 				8946283A2B34872C008B5BB8 /* PostsModel.swift in Sources */,
 				898189A62B07D4D300368979 /* ChatViewModel.swift in Sources */,
